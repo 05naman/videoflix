@@ -297,14 +297,14 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
         }
     }
 
-
-
     const avatar = await uploadOnCloudinary(avatarLocalPath)
 
     if (!avatar.url) {
         throw new ApiError(400, "Error while uploading on avatar")
         
     }
+    // console.log("AVATAR URL : ",avatar);
+    
 
     const updatedUser = await User.findByIdAndUpdate(
         req.user?._id,
@@ -315,7 +315,9 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
         },
         {new: true}
     ).select("-password")
-
+    
+    // console.log("Updated user :" ,updatedUser);
+    
     return res
     .status(200)
     .json(

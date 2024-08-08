@@ -1,26 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdOutlineCloudUpload, MdEdit } from "react-icons/md";
 import { useUpdateAvatar } from "../../hooks/user.hook";
 
-function AvatarInput({ avatar }) {
+function AvatarInput({ initialAvatar }) {
   const [profilePic, setProfilePic] = useState(null);
-  const [selectedProfile, setSelectedProfile] = useState(avatar || "");
+  const [selectedProfile, setSelectedProfile] = useState(initialAvatar || "");
 
   const { mutateAsync: uploadAvatar, isPending } = useUpdateAvatar();
 
-  const handleUploadAvatar = async () => {
-    if (!profilePic) return; // No file selected
+  useEffect(() => {
+    setSelectedProfile(initialAvatar);
+  }, [initialAvatar]);
 
-    const uploadedAvatar = await uploadAvatar(profilePic);
-    if (uploadedAvatar) {
-      setSelectedProfile(uploadedAvatar?.data?.avatar?.url);
-      setProfilePic(null);
+  const handleUploadAvatar = async () => {
+    if (!profilePic) {
+      return; // No file selected
+    }
+
+    try {
+      const response = await uploadAvatar(profilePic);
+
+      // Check and use the URL from the response
+      const avatarUrl = response?.data?.avatar;
+      if (avatarUrl) {
+        setSelectedProfile(avatarUrl);
+        setProfilePic(null);
+      }
+    } catch (error) {
+      // Handle error if necessary
     }
   };
 
   return (
     <div
-      className=" relative h-full w-full rounded-full bg-blue-300/20 bg-cover bg-center bg-no-repeat"
+      className="relative h-full w-full rounded-full bg-blue-300/20 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${selectedProfile})` }}
     >
       {isPending && (
@@ -41,8 +54,13 @@ function AvatarInput({ avatar }) {
           style={{ display: "none" }}
           disabled={isPending}
           onChange={(e) => {
-            setSelectedProfile(URL.createObjectURL(e.target.files[0]));
-            setProfilePic(e.target.files[0]);
+            const file = e.target.files[0];
+
+            if (file) {
+              const objectURL = URL.createObjectURL(file);
+              setSelectedProfile(objectURL);
+              setProfilePic(file);
+            }
           }}
         />
         <div className="relative h-full w-full justify-center items-center gap-4 z-30 flex flex-col">
