@@ -8,18 +8,33 @@ const app = express();
 
 const allowedOrigins = [
     process.env.CORS_ORIGIN_LOCAL,
+    process.env.CORS_ORIGIN_PRODUCTION
   ];
   
   
   // Log allowed origins to verify they are set correctly
   console.log('Allowed Origins:', allowedOrigins);
   
+  // app.use(
+  //   cors({
+  //     origin:process.env.CORS_ORIGIN_LOCAL,
+  //     credentials: true,
+  //   })
+  // );
   app.use(
     cors({
-      origin:process.env.CORS_ORIGIN_LOCAL,
+      origin: (origin, callback) => {
+        // In production, only allow requests from the production frontend URL
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
       credentials: true,
     })
   );
+  
 
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
