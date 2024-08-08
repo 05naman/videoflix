@@ -39,7 +39,7 @@ export const getUserChannelProfile = async (username) => {
   }
 };
 
-export const  updateUserAvatar= async (data) => {
+export const updateUserProfile = async (data) => {
   const formData = new FormData();
 
   if (data) {
