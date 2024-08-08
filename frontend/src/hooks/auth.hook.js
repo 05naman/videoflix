@@ -1,79 +1,46 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-
 import {
-  getWatchHistory,
-  getUserChannelProfile,
-  updateUserCoverImage,
-  updateUserProfile,
-  updateAccountDetails,
-  updateChannelInfo,
-  clearWatchHistory,
-} from "../api/user.api";
+  login,
+  logout,
+  getCurrentUser,
+  registerUser,
+  changePassword,
+} from "../api/auth.api";
 
-export const useWatchHistory = () => {
+export const useLogin = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (user) => login(user),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("currentUser");
+    },
+    retry: 0,
+  });
+};
+
+export const useLogout = () => {
+  return useMutation({
+    mutationFn: () => logout(),
+  });
+};
+
+export const useCurrentUser = () => {
   return useQuery({
-    queryKey: ["watchHistory"],
-    queryFn: () => getWatchHistory(),
-    refetchOnWindowFocus: true,
+    queryKey: ["currentUser"],
+    queryFn: () => getCurrentUser(),
+    staleTime: 1000 * 60 * 5,
+    retry: 1,
   });
 };
 
-export const useUserChannelInfo = (username) => {
-  return useQuery({
-    queryKey: ["channelInfo", username],
-    queryFn: () => getUserChannelProfile(username),
-    refetchOnWindowFocus: true,
-  });
-};
-
-export const useUpdateAvatar = () => {
-  const queryClient = useQueryClient();
+export const useRegisterUser = () => {
   return useMutation({
-    mutationFn: (data) => updateUserProfile(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries("channelInfo");
-    },
+    mutationFn: (user) => registerUser(user),
   });
 };
 
-export const useUpdateCoverImage = () => {
-  const queryClient = useQueryClient();
+export const useChangePassword = () => {
   return useMutation({
-    mutationFn: (data) => updateUserCoverImage(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries("channelInfo");
-    },
-  });
-};
-
-export const useUpdateAccountDetails = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (data) => updateAccountDetails(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["channelInfo"] });
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-    },
-  });
-};
-
-export const useUpdateChannelInfo = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (data) => updateChannelInfo(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      queryClient.invalidateQueries({ queryKey: ["channelInfo"] });
-    },
-  });
-};
-
-export const useClearWatchHistory = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: () => clearWatchHistory(),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["watchHistory"] });
-    },
+    mutationFn: (data) => changePassword(data),
   });
 };

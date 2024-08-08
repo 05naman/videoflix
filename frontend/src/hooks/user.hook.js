@@ -4,10 +4,10 @@ import {
   getWatchHistory,
   getUserChannelProfile,
   updateUserCoverImage,
+  updateUserProfile,
   updateAccountDetails,
   updateChannelInfo,
   clearWatchHistory,
-  updateUserAvatar,
 } from "../api/user.api";
 
 export const useWatchHistory = () => {
@@ -29,16 +29,8 @@ export const useUserChannelInfo = (username) => {
 export const useUpdateAvatar = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data) => updateUserAvatar(data),
+    mutationFn: (data) => updateUserProfile(data),
     onSuccess: () => {
-      queryClient.invalidateQueries("channelInfo");
-    },
-    onError: (error) => {
-      console.error("Error updating avatar:", error);
-      // You could show a user-friendly message here
-    },
-    onSettled: () => {
-      // This will run regardless of whether the mutation was successful or errored
       queryClient.invalidateQueries("channelInfo");
     },
   });
