@@ -29,7 +29,7 @@ import Dropzone from "./Dropzone.jsx"
 import UploadVideo from "./UploadVideo/UploadVideo.jsx"
 import VideoCard from "./VideoCard.jsx"
 import SubscribeButton from "./SubscribeButton.jsx"
-import Logout from "./Header/Logout.jsx"
+// import Logout from "./Header/Logout.jsx"
 
 //Playlist
 import ExistingPlaylist from "./Playlist/ExistingPlaylist.jsx"
@@ -120,6 +120,6 @@ export {
     Dropzone,
     UploadVideo,
     VideoCard,
-    Logout
+    // Logout
     
 }

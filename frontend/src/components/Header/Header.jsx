@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Logo from "../Logo";
 import Button from "../Button";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import {useLogout } from "../../hooks/auth.hook.js"
+import { useLogout } from "../../hooks/auth.hook";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../store/authSlice";
 
