@@ -16,27 +16,20 @@ const allowedOrigins = [
 console.log('Allowed Origins:', allowedOrigins);
 
 // Dynamic CORS configuration
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//   })
-// );
-
 app.use(cors({
-  origin: process.env.CORS_ORIGIN_PRODUCTION
-  , methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
   credentials: true, // Allow credentials if needed
 }));
 
-
+app.use(cookieParser());
 
 
 
