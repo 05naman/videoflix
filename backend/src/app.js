@@ -30,7 +30,7 @@ console.log('Allowed Origins:', allowedOrigins);
 // );
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN_PRODUCTION
+  origin: process.env.CORS_ORIGIN_LOCAL
   , methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
   credentials: true, // Allow credentials if needed
