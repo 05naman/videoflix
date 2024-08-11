@@ -34,7 +34,7 @@ function LoginForm({ onLogin }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit(loginUser)} className="flex flex-col text-[#FFFFFF]">
+    <form onSubmit={handleSubmit(loginUser)} className="flex flex-col text-black">
       <Input className="text-white"
         label={"Username/Email"}
         type="text"
