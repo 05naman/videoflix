@@ -49,6 +49,8 @@ API.interceptors.response.use(
 // Login function
 export const login = async (formData) => {
   try {
+    console.log(data);
+    
     const { data } = await API.post("/users/login", formData);
     localStorage.setItem('accessToken', data.data.accessToken);
     API.defaults.headers.common["Authorization"] = `Bearer ${data.data.accessToken}`;
@@ -77,7 +79,10 @@ export const logout = async () => {
 // Get current user function
 export const getCurrentUser = async () => {
   try {
+    
     const { data } = await API.get("/users/current-user");
+    console.log(data);
+    
     return data?.data?.user;
   } catch (error) {
     throw error?.response?.data?.error;
