@@ -62,10 +62,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Start the server
-const PORT = process.env.PORT || 5173;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
 export { app };
