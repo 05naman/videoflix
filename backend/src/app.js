@@ -25,24 +25,16 @@ app.use(cors({
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed methods
-  // allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
+  allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
   credentials: true, // Allow credentials if needed
 }));
 
 app.use(cookieParser()); // Only need to call this once
 
-app.use((req, res, next) => {
-  res.setHeader("Content-Type", "application/json");
-  next();
-});
-
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(express.static("public"));
-app.use((req, res, next) => {
-  res.setHeader("Content-Type", "application/json");
-  next();
-});
+
 // Import and use routes
 import userRouter from './routes/user.routes.js';
 import healthRouter from "./routes/healthcheck.routes.js";
@@ -68,6 +60,12 @@ app.use("/api/v1/healthcheck", healthRouter);
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong!' });
+});
+
+// Start the server
+const PORT = process.env.PORT || 5173;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 export { app };

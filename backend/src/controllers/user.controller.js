@@ -230,6 +230,8 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
 
 
 const getCurrentUser = asyncHandler(async (req, res) => {
+  
+  console.log()
     return res
       .status(200)
       .json(
