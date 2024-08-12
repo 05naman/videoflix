@@ -18,7 +18,7 @@ console.log('Allowed Origins:', allowedOrigins);
 // Dynamic CORS configuration
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -29,9 +29,7 @@ app.use(cors({
   credentials: true, // Allow credentials if needed
 }));
 
-app.use(cookieParser());
-
-
+app.use(cookieParser()); // Only need to call this once
 
 app.use((req, res, next) => {
   res.setHeader("Content-Type", "application/json");
@@ -41,7 +39,6 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: "100mb" }));
 app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use(express.static("public"));
-app.use(cookieParser());
 
 // Import and use routes
 import userRouter from './routes/user.routes.js';
@@ -63,5 +60,11 @@ app.use("/api/v1/dashboard", dashboardRouter);
 app.use("/api/v1/subscription", subscriptionRouter);
 app.use("/api/v1/playlist", playlistRouter);
 app.use("/api/v1/healthcheck", healthRouter);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
+});
 
 export { app };
