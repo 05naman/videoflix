@@ -5,7 +5,17 @@ import { BASE_URL } from "../constants";
 const API = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
+  headers: {
+    // 'Authorization': `Bearer ${YOUR_TOKEN}`,
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000,
+  responseType: 'json',
+  validateStatus: function (status) {
+    return status >= 200 && status < 500;
+  },
 });
+
 
 // Interceptor to add Authorization header
 API.interceptors.request.use(
