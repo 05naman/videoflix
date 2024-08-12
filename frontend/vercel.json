@@ -12,7 +12,7 @@
     "rewrites": [
       {
         "source": "/api/v1/(.*)",
-        "destination": "https://videotube-backend-wyz1.onrender.com/api/v1/$1"
+        "destination": "https://videoflix-backend.vercel.app/api/v1/$1"
       },
       {
         "source": "/(.*)",
@@ -20,6 +20,6 @@
       }
     ],
     "env": {
-      "VITE_API_BASE_URL": "https://videotube-backend-wyz1.onrender.com/api/v1"
+      "VITE_API_BASE_URL": "https://videoflix-backend.vercel.app/api/v1"
     }
   }
