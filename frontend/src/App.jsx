@@ -21,9 +21,9 @@ function App() {
   //   }
   // }, [userData, isFetching, dispatch, user]);
 
-  if (isLoading || isFetching) {
-    return <SpinnerLoading />;
-  }
+  // if (isLoading || isFetching) {
+  //   return <SpinnerLoading />;
+  // }
 
   // if (error) {
   //   console.log(error);
