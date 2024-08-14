@@ -12,14 +12,14 @@ function App() {
   const { data: userData, isFetching, error } = useCurrentUser();
   const user = useSelector((state) => state.auth.userData);
 
-  useEffect(() => {
-    if (!isFetching) {
-      if (userData && !user) {
-        dispatch(setUser(userData));
-      }
-      setIsLoading(false);
-    }
-  }, [userData, isFetching, dispatch, user]);
+  // useEffect(() => {
+  //   if (!isFetching) {
+  //     if (userData && !user) {
+  //       dispatch(setUser(userData));
+  //     }
+  //     setIsLoading(false);
+  //   }
+  // }, [userData, isFetching, dispatch, user]);
 
   if (isLoading || isFetching) {
     return <SpinnerLoading />;
