@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Header, SpinnerLoading } from "./components/index.js";
 import { Outlet } from "react-router-dom";
 import SideBar from "./components/SideBar";
-import { useCurrentUser } from "./hooks/auth.hook.js";
-import { setUser } from "./store/authSlice.js";
-import { useDispatch, useSelector } from "react-redux";
+// import { useCurrentUser } from "./hooks/auth.hook.js";
+// import { setUser } from "./store/authSlice.js";
+// import { useDispatch, useSelector } from "react-redux";
 
 function App() {
-  const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
-  const { data: userData, isFetching, error } = useCurrentUser();
-  const user = useSelector((state) => state.auth.userData);
+  // const dispatch = useDispatch();
+  // const [isLoading, setIsLoading] = useState(true);
+  // const { data: userData, isFetching, error } = useCurrentUser();
+  // const user = useSelector((state) => state.auth.userData);
 
   // useEffect(() => {
   //   if (!isFetching) {
