@@ -25,11 +25,11 @@ function App() {
     return <SpinnerLoading />;
   }
 
-  if (error) {
-    console.log(error);
+  // if (error) {
+  //   console.log(error);
     
-    return <div className="text-red-500">Error loading user data. Please try again later.</div>;
-  }
+  //   return <div className="text-red-500">Error loading user data. Please try again later.</div>;
+  // }
 
   return (
     <div className="h-screen overflow-y-auto bg-[#0e0e0e] text-white">
