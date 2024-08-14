@@ -62,8 +62,8 @@ function LoginForm({ onLogin }) {
       {errors.password && (
         <span className="text-red-500 text-sm">{errors.password.message}</span>
       )}
-       <div className="flex justify-center">
-      <Button width="w-32" className="bg-black hover:bg-teal-500 hover:text-white" type="submit">{isPending ? "Logging In" : "Login"}</Button>
+      <div className="flex justify-center">
+        <Button width="w-32" className="bg-black hover:bg-teal-500 hover:text-white" type="submit">{isPending ? "Logging In" : "Login"}</Button>
       </div>
     </form>
   );

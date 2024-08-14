@@ -18,6 +18,10 @@ const authSlice = createSlice({
               state.user = action.payload;
             }
           },
+          unSetUser: (state) => {
+            state.status = false;
+            state.user = null;
+          }
     }
 
 })

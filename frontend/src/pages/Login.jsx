@@ -3,15 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../components/index.js";
 import { LoginForm } from "../components/index.js";
 import { useDispatch } from "react-redux";
-import { setUser } from "../store/authSlice";
+import { setUser,unSetUser } from "../store/authSlice";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onLogin = (session) => {
-    dispatch(setUser(session));
-    navigate("/");
+    if (session) {
+      dispatch(setUser(session));
+      navigate("/");
+    } else {
+      dispatch(unSetUser());
+      // Optionally handle login failure or redirect
+    }
   };
   return (
     <div className="h-screen overflow-y-auto bg-[#101518] text-black flex justify-center items-center">

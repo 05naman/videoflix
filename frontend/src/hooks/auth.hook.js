@@ -2,16 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { login, logout, getCurrentUser, registerUser, changePassword } from "../api/auth.api";
 
 export const useLogin = () => {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (user) => login(user),
-    onSuccess: () => {
-      queryClient.invalidateQueries("currentUser");
-    },
+    mutationFn: (data) => login(data),
     retry: 0,
   });
 };
-
 export const useLogout = () => {
   return useMutation({
     mutationFn: () => logout(),
