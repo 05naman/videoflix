@@ -10,14 +10,16 @@ import {
   updateVideoViews,
   getVideoByIdForGuest,
 } from "../controllers/video.controller.js";
-// import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
+
 const router = Router();
 
 router
   .route("/")
   .get(getAllVideos)
   .post(
+    verifyJWT,
     upload.fields([
       {
         name: "video",
@@ -33,16 +35,16 @@ router
 
 router
   .route("/v/:videoId")
-  .get(getVideoById)
-  .delete(deleteVideo)
-  .patch(upload.single("thumbnail"), updateVideo);
+  .get(verifyJWT, getVideoById)
+  .delete(verifyJWT, deleteVideo)
+  .patch(verifyJWT, upload.single("thumbnail"), updateVideo);
 
-router.route("/toggle/publish/:videoId").patch(togglePublishStatus);
+router.route("/toggle/publish/:videoId").patch(verifyJWT, togglePublishStatus);
 
 router.route("/next/:videoId").get(getNextVideos);
 
 router.route("/v/guest/:videoId").get(getVideoByIdForGuest);
 
-router.route("/update/views/:videoId").patch(updateVideoViews);
+router.route("/update/views/:videoId").patch(verifyJWT, updateVideoViews);
 
 export default router;

@@ -7,7 +7,7 @@ const app = express();
 // Define allowed origins based on the environment
 const allowedOrigins = [
   process.env.CORS_ORIGIN_PRODUCTION,
-  process.env.CORS_ORIGIN_DEV,
+  process.env.CORS_ORIGIN_LOCAL,
   "http://localhost:5173/",
   "http://localhost:5174/",
   "http://localhost:5175/"
