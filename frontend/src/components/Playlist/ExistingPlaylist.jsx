@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import {  usePlaylistsByUser } from "../../hooks/playlist.hook";
+import { usePlaylistsByUser } from "../../hooks/playlist.hook";
 import PlaylistName from "./PlaylistName";
 import ProgressBar from "../ProgressBar";
 
@@ -18,10 +18,13 @@ function ExistingPlaylist({ videoId }) {
     return <ProgressBar />;
   }
 
+  // Ensure existingPlaylists is an array
+  const playlistsArray = Array.isArray(existingPlaylists) ? existingPlaylists : [];
+
   return (
     <ul className="mb-4">
-      {isFetched && existingPlaylists?.length > 0 ? (
-        existingPlaylists.map((playlist) => (
+      {isFetched && playlistsArray.length > 0 ? (
+        playlistsArray.map((playlist) => (
           <PlaylistName
             key={playlist._id}
             playlistId={playlist?._id}

@@ -15,10 +15,10 @@ function ChannelSubscribers() {
       subscriber.subscriber?.username
         .toLowerCase()
         .includes(searchTerm.toLowerCase())
-    );
+    ) || [];
   }, [channelSubscribers, searchTerm]);
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex flex-col gap-y-4 py-4">
         {Array(5)
@@ -28,8 +28,9 @@ function ChannelSubscribers() {
           ))}
       </div>
     );
+  }
 
-  if (channelSubscribers && channelSubscribers.length === 0) {
+  if (channelSubscribers?.length === 0) {
     return (
       <div className="flex justify-center p-4 mt-4">
         <div className="w-full max-w-sm text-center">
@@ -55,11 +56,12 @@ function ChannelSubscribers() {
             </span>
           </p>
           <h5 className="mb-2 font-semibold">No Subscribers</h5>
-          <p>This channel has currently no Subscribers</p>
+          <p>This channel currently has no subscribers.</p>
         </div>
       </div>
     );
   }
+
   return (
     <div className="flex flex-col gap-y-4 py-4">
       <div className="relative mb-2 rounded-lg bg-white py-2 pl-8 pr-3 text-black">
@@ -84,16 +86,16 @@ function ChannelSubscribers() {
           className="w-full bg-transparent outline-none"
           placeholder="Search"
           onChange={(e) => setSearchTerm(e.target.value)}
+          value={searchTerm}
         />
       </div>
 
-      {filteredSubscribers &&
-        filteredSubscribers.map((subscriber) => (
-          <Subscriber
-            key={subscriber.subscriber?._id}
-            subscriber={subscriber.subscriber}
-          />
-        ))}
+      {filteredSubscribers.map((subscriber) => (
+        <Subscriber
+          key={subscriber.subscriber?._id}
+          subscriber={subscriber.subscriber}
+        />
+      ))}
     </div>
   );
 }

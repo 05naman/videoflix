@@ -23,21 +23,10 @@ function ChannelTweets() {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage]);
+  }, [inView, hasNextPage, fetchNextPage]);
 
-  // if (isFetching && !isFetchingNextPage) {
-  //   return (
-  //     <div className="flex flex-col justify-center gap-3">
-  //       {Array(5)
-  //         .fill()
-  //         .map((_, index) => (
-  //           <SubscriberSkeleton key={index} />
-  //         ))}
-  //     </div>
-  //   );
-  // }
-
-  const allTweets = data?.pages.flatMap((page) => page.docs) || [];
+  // Default to empty array if data or pages are undefined
+  const allTweets = (data?.pages || []).flatMap((page) => page.docs || []);
 
   if (isFetched && allTweets.length === 0) {
     return (

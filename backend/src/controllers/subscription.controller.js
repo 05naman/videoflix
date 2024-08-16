@@ -45,79 +45,83 @@ const toggleSubscription = asyncHandler(async (req, res) => {
 
 // controller to return subscriber list of a channel
 const getUserChannelSubscribers = asyncHandler(async (req, res) => {
-    let { channelId } = req.params;
-  
-    channelId = new mongoose.Types.ObjectId(channelId);
-  
-    const channelSubscribers = await Subscription.aggregate([
-      {
-        $match: {
-          channel: channelId,
-        },
+  let { channelId } = req.params;
+
+  channelId = new mongoose.Types.ObjectId(channelId);
+
+  const channelSubscribers = await Subscription.aggregate([
+    {
+      $match: {
+        channel: channelId,
       },
-      {
-        $lookup: {
-          from: "users",
-          localField: "subscriber",
-          foreignField: "_id",
-          as: "subscriber",
-          pipeline: [
-            {
-              $lookup: {
-                from: "subscriptions",
-                localField: "_id", //subscriber's id
-                foreignField: "channel",
-                as: "subscribedToSubscriber",
-              },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "subscriber",
+        foreignField: "_id",
+        as: "subscriber",
+        pipeline: [
+          {
+            $lookup: {
+              from: "subscriptions",
+              localField: "_id", //subscriber's id
+              foreignField: "channel",
+              as: "subscribedToSubscriber",
             },
-            {
-              $addFields: {
-                subscribedToSubscriber: {
-                  $cond: {
-                    if: {
-                      $in: [channelId, "$subscribedToSubscriber.subscriber"],
-                    },
-                    then: true,
-                    else: false,
-                  },
-                },
-                subscribersCount: {
-                  $size: "$subscribedToSubscriber",
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        $unwind: "$subscriber",
-      },
-      {
-        $project: {
-          _id: 0,
-          subscriber: {
-            _id: 1,
-            username: 1,
-            fullName: 1,
-            "avatar.url": 1,
-            subscribedToSubscriber: 1,
-            subscribersCount: 1,
           },
+          {
+            $addFields: {
+              subscribedToSubscriber: {
+                $cond: {
+                  if: {
+                    $in: [channelId, "$subscribedToSubscriber.subscriber"],
+                  },
+                  then: true,
+                  else: false,
+                },
+              },
+              subscribersCount: {
+                $size: "$subscribedToSubscriber",
+              },
+            },
+          },
+        ],
+      },
+    },
+    {
+      $unwind: {
+        path: "$subscriber",
+        preserveNullAndEmptyArrays: true, // Keep the array empty if no subscribers
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        subscriber: {
+          _id: 1,
+          username: 1,
+          fullName: 1,
+          "avatar.url": 1,
+          subscribedToSubscriber: 1,
+          subscribersCount: 1,
         },
       },
-    ]);
-    if (!channelSubscribers)
-        throw new ApiError(500, "Fetching User Channel Subscribers failed");
-      return res
-        .status(200)
-        .json(
-          new ApiResponse(
-            200,
-            channelSubscribers,
-            "User Channel Subscribers fetched Successfully"
-          )
-        );
-    });
+    },
+  ]);
+
+  // Always return an empty array if no subscribers are found
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        channelSubscribers || [], // Ensure an empty array is returned
+        "User Channel Subscribers fetched Successfully"
+      )
+    );
+});
+
   
 
 // controller to return channel list to which user has subscribed

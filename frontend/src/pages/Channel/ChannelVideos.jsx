@@ -27,7 +27,9 @@ function ChannelVideos() {
   }
 
   // Handle case where no videos are found
-  if (channelVideos?.pages[0]?.docs.length === 0) {
+  const videos = channelVideos?.pages[0]?.docs || [];
+
+  if (videos.length === 0) {
     return (
       <div className="flex justify-center p-4">
         <div className="w-full max-w-sm text-center">
@@ -64,19 +66,15 @@ function ChannelVideos() {
   return (
     <div
       className={`grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 ${
-        channelVideos?.pages[0]?.docs.length === 1
-          ? "justify-items-start"
-          : ""
+        videos.length === 1 ? "justify-items-start" : ""
       }`}
     >
       {isFetched &&
-        channelVideos.pages.map((page) =>
-          page.docs.map((video) => (
-            <Link to={`/video/${video._id}`} key={video._id}>
-              <VideoCard video={video} />
-            </Link>
-          ))
-        )}
+        videos.map((video) => (
+          <Link to={`/video/${video._id}`} key={video._id}>
+            <VideoCard video={video} />
+          </Link>
+        ))}
     </div>
   );
 }

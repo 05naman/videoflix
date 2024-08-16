@@ -7,19 +7,23 @@ import { Link } from "react-router-dom";
 function ChannelPlaylist() {
   const channelId = useSelector((state) => state.channel.channel?._id);
 
+  // Fetch playlists with default empty array to avoid issues if data is undefined
   const {
-    data: channelPlaylists,
+    data: channelPlaylists = [],  // Ensure default value
     isFetching,
     isFetched,
   } = usePlaylistsByUser(channelId);
-  console.log(channelPlaylists);
 
   if (isFetching) {
     return <ProgressBar />;
   }
+
+  // Ensure channelPlaylists is an array
+  const playlistsArray = Array.isArray(channelPlaylists) ? channelPlaylists : [];
+
   return (
     <>
-      {isFetched && channelPlaylists?.length === 0 && (
+      {isFetched && playlistsArray.length === 0 && (
         <div className="flex justify-center p-4">
           <div className="w-full max-w-sm text-center">
             <p className="mb-3 w-full">
@@ -43,15 +47,15 @@ function ChannelPlaylist() {
               </span>
             </p>
             <h5 className="mb-2 font-semibold">No playlist created</h5>
-            <p>There are no playlist created on this channel.</p>
+            <p>There are no playlists created on this channel.</p>
           </div>
         </div>
       )}
       <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 p-4">
         {isFetched &&
-          channelPlaylists?.length > 0 &&
-          channelPlaylists.map((playlist) => (
-            <Link key={playlist._id} to={`/playlist/${playlist?._id}`}>
+          playlistsArray.length > 0 &&
+          playlistsArray.map((playlist) => (
+            <Link key={playlist._id} to={`/playlist/${playlist._id}`}>
               <PlaylistCard playlist={playlist} />
             </Link>
           ))}

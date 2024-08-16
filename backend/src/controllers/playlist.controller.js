@@ -32,23 +32,23 @@ const createPlaylist = asyncHandler(async (req, res) => {
 })
 
 const getUserPlaylists = asyncHandler(async (req, res) => {
-    const {userId} = req.params
-    //TODO: get user playlists
+    const { userId } = req.params;
+
     if (!userId) {
-        throw new ApiError(400, "Something went wrong while getting user ID")
+        throw new ApiError(400, "Something went wrong while getting user ID");
     }
 
-    const user = await User.findById(userId)
+    const user = await User.findById(userId);
 
     if (!user) {
-        throw new ApiError(404, "No user existed by this Id")
+        throw new ApiError(404, "No user existed by this Id");
     }
-    
+
     const playlists = await Playlist.aggregate([
         {
             $match: {
-                owner: new mongoose.Types.ObjectId(userId)
-            }
+                owner: new mongoose.Types.ObjectId(userId),
+            },
         },
         {
             $lookup: {
@@ -56,7 +56,7 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
                 localField: "videos",
                 foreignField: "_id",
                 as: "videos",
-            }
+            },
         },
         {
             $lookup: {
@@ -64,20 +64,20 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
                 localField: "owner",
                 foreignField: "_id",
                 as: "owner",
-            }
+            },
         },
         {
             $addFields: {
                 totalVideos: {
-                    $size: "$videos"
+                    $size: "$videos",
                 },
                 totalViews: {
-                    $sum: "$videos.views"
+                    $sum: "$videos.views",
                 },
                 owner: {
-                    $first: "$owner"
-                }
-            }
+                    $first: "$owner",
+                },
+            },
         },
         {
             $project: {
@@ -95,29 +95,28 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
                     description: 1,
                     duration: 1,
                     createdAt: 1,
-                    views: 1
+                    views: 1,
                 },
                 owner: {
                     username: 1,
                     fullName: 1,
-                    "avatar.url": 1
-                }
-            }
-        }
-        
+                    "avatar.url": 1,
+                },
+            },
+        },
     ]);
 
-    if (!playlists) 
-    {
-        throw new ApiError(500, "Something went wrong while getting user playlist")
+    if (!playlists) {
+        throw new ApiError(500, "Something went wrong while getting user playlist");
     }
 
-    if (playlists.length() === 0) {
-        return res.status(200).json(new ApiResponse(200, "User have no playlist"))
+    if (playlists.length === 0) {  // Changed playlists.length() to playlists.length
+        return res.status(200).json(new ApiResponse(200, "User has no playlists"));
     }
 
-    return res .status(200).json(new ApiResponse(200, playlists[0], "Playlist fetched successfully"))
-})
+    return res.status(200).json(new ApiResponse(200, playlists, "Playlists fetched successfully"));
+});
+
 
 const getPlaylistById = asyncHandler(async (req, res) => {
     const {playlistId} = req.params
