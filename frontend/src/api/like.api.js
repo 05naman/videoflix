@@ -47,6 +47,8 @@ export const toggleTweetLike = async (tweetId) => {
 export const getLikedVideos = async () => {
   try {
     const { data } = await API.get("/like/videos");
+    console.log(data);
+    
     return data?.data || [];
   } catch (error) {
     const errorMessage = error?.response?.data?.error || "An unexpected error occurred.";
