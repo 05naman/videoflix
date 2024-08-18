@@ -30,7 +30,6 @@ export const toggleSubscribe = async (channelId) => {
 
 // Get subscribed channels for a subscriber
 export const getSubscribedChannels = async (subscriberId) => {
-  console.log(`Fetching subscribed channels for subscriberId: ${subscriberId}`); // Debug log
   try {
     const response = await API.get(`/subscription/u/${subscriberId}`);
     console.log("Response Data:", response?.data); // Debug log

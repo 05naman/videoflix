@@ -44,7 +44,6 @@ function PersonalInformation() {
   const { mutateAsync: updateAccount, isPending } = useUpdateAccountDetails();
 
   const onSubmit = async (data) => {
-    console.log("Submitting data:", data); // Debug data being submitted
 
     const { firstname, lastname, email } = data;
     const fullName = `${firstname} ${lastname}`;
@@ -60,7 +59,6 @@ function PersonalInformation() {
       email !== initialData.email;
 
     if (!hasDataChanged) {
-      console.log("No changes detected.");
       return;
     }
 
@@ -69,10 +67,8 @@ function PersonalInformation() {
       email,
     };
 
-    console.log("Submitting to API:", submitData); // Debug API submission
     try {
       await updateAccount(submitData);
-      console.log("Update successful");
     } catch (error) {
       console.error("Error updating account:", error);
     }

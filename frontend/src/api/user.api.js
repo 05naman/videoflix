@@ -41,7 +41,6 @@ export const getUserChannelProfile = async (username) => {
 
 export const updateUserProfile = async (data) => {
   const formData = new FormData();
-  console.log("Avatar data : ",data);
   
   if (data) {
     formData.append("avatar", data);

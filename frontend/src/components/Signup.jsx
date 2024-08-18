@@ -128,7 +128,7 @@ function Signup() {
         </button>
 
         <div className="w-full flex justify-center items-center">
-          <Logo className="w-full text-center text-3xl font-semibold text-black" inline={true} />
+          <Logo className="w-full text-center text-3xl font-semibold text-black mr-5" inline={true} />
         </div>
 
         <div className="w-full flex flex-col items-center justify-center mb-6">

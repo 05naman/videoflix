@@ -231,7 +231,6 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
 const getCurrentUser = asyncHandler(async (req, res) => {
 
-  console.log()
   return res
     .status(200)
     .json(
@@ -299,8 +298,6 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Error while uploading on avatar")
 
   }
-  console.log("AVATAR URL : ",avatar);
-
 
   const updatedUser = await User.findByIdAndUpdate(
     req.user?._id,
@@ -312,7 +309,6 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     { new: true }
   ).select("-password -refreshToken")
 
-  console.log("Updated user :" ,updatedUser);
   if(!updatedUser)
   {throw new ApiError(501, error?.message || "Updating User Avatar failed");}
 
@@ -437,8 +433,6 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       new ApiResponse(200, channel[0], "User channel fetched successfully")
     )
 })
-
-
 
 const getWatchHistory = asyncHandler(async (req, res) => {
   try {

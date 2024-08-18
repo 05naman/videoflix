@@ -35,7 +35,7 @@ function LoginForm({ onLogin }) {
   };
   return (
     <form onSubmit={handleSubmit(loginUser)} className="flex flex-col text-[#FFFFFF]">
-      <Input className="text-black"
+      <Input className="text-black mb-2"
         label={"Username/Email"}
         type="text"
         placeholder="Username"
@@ -49,7 +49,7 @@ function LoginForm({ onLogin }) {
           {errors.usernameOrEmail.message}
         </span>
       )}
-      <Input
+      <Input className="mb-4"
         label={"Password"}
         type="password"
         placeholder="Password"
@@ -57,13 +57,12 @@ function LoginForm({ onLogin }) {
         {...register("password", {
           required: true,
         })}
-        className="mb-4"
       />
       {errors.password && (
         <span className="text-red-500 text-sm">{errors.password.message}</span>
       )}
       <div className="flex justify-center">
-        <Button width="w-32" className="bg-black hover:bg-teal-500 hover:text-white" type="submit">{isPending ? "Logging In" : "Login"}</Button>
+        <Button width="w-32" height="h-11" className="bg-black hover:bg-teal-500 hover:text-white text-lg mt-3" type="submit">{isPending ? "Logging In" : "Login"}</Button>
       </div>
     </form>
   );

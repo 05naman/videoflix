@@ -1,4 +1,3 @@
-// header.jsx
 import React, { useState, useEffect } from "react";
 import Logo from "../Logo";
 import Button from "../Button";
@@ -136,7 +135,7 @@ function Header() {
                     className="flex w-full gap-4 text-left sm:items-center"
                   >
                     <img
-                      src={userData.avatar?.url}
+                      src={userData.avatar}
                       alt={userData.username}
                       className="object-cover h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12"
                     />

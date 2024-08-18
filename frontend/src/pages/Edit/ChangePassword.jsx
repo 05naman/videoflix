@@ -47,7 +47,6 @@ function ChangePassword() {
       oldPassword,
       newPassword,
     };
-    console.log(submitData);
     const res = await changePassword(submitData);
     if (res) {
       reset();

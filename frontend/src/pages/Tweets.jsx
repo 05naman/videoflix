@@ -26,13 +26,8 @@ function Tweets() {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  // Log data to debug
-  console.log("Fetched Data:", data);
-
   // Safeguard against undefined pages or docs
   const allTweets = (data?.pages || []).flatMap((page) => {
-    // Log each page to debug
-    console.log("Page Data:", page);
     return page?.docs || [];
   });
 

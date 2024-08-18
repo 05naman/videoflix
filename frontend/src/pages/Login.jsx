@@ -49,11 +49,11 @@ function Login() {
           <FiX size={20} />
         </button>
 
-        <div className="w-full flex justify-center items-center mb-6">
-          <Logo className="text-black text-center text-2xl font-semibold" inline={true} />
+        <div className="w-full flex justify-center items-center">
+          <Logo className="text-black text-center text-2xl font-semibold mr-5" inline={true} />
         </div>
         <div className="w-full flex flex-col items-center mb-6">
-          <h1 className="text-2xl text-black font-extrabold">Login</h1>
+          <h1 className="text-2xl text-black font-bold mb-2">Login</h1>
           <span className="text-black">
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-500 hover:text-blue-400">

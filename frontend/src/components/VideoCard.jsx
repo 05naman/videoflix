@@ -2,6 +2,7 @@ import React from "react";
 import { timeDuration, timeAgo } from "../assets/timeAgo";
 
 function Videocard({ video }) {
+  
   return (
     <div className="w-full">
       <div className="relative mb-2 w-full pt-[56%]">
@@ -24,9 +25,9 @@ function Videocard({ video }) {
       </div>
       <div className="flex gap-x-2">
         <div className="h-10 w-10 shrink-0">
-          {video?.ownerDetails?.avatar?.url ? (
+          {video?.ownerDetails?.avatar ? (
             <img
-              src={video?.ownerDetails?.avatar?.url}
+              src={video?.ownerDetails?.avatar}
               alt={video?.ownerDetails?.username || "Owner Avatar"}
               className="h-full w-full rounded-full object-cover"
             />

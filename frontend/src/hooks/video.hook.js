@@ -18,11 +18,9 @@ export const useVideos = (options = {}) => {
     queryKey: ["videos", { userId, sortBy, sortType, query }],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await getVideos(pageParam, userId, sortBy, sortType, query);
-      console.log("API response:", response); // Log the response
       return response;
     },
     getNextPageParam: (lastPage) => {
-      console.log("lastPage:", lastPage); // Log the lastPage
       if (lastPage.hasNextPage === false) return;
       return lastPage.nextPage;
     },

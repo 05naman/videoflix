@@ -16,10 +16,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
 
   const pipeline = [];
-  //first create a search index using atlas
-  //then use $search to search the videos
-  //search index is created on title and description fields
-  //here i have created "search-videos" index on "videos" collection
+
   if (query) {
     pipeline.push({
       $search: {
@@ -31,22 +28,20 @@ const getAllVideos = asyncHandler(async (req, res) => {
       },
     });
   }
+
   if (userId) {
     if (!isValidObjectId(userId)) {
       throw new ApiError(400, "Invalid userId");
     }
-
     pipeline.push({
       $match: {
         owner: new mongoose.Types.ObjectId(userId),
       },
     });
   }
-  // fetch videos only that are set isPublished as true
+
   pipeline.push({ $match: { isPublished: true } });
 
-  //sortBy can be views, createdAt, duration
-  //sortType can be ascending(-1) or descending(1)
   if (sortBy && sortType) {
     pipeline.push({
       $sort: {
@@ -68,7 +63,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
           {
             $project: {
               username: 1,
-              "avatar.url": 1,
+              avatar: 1,  // Ensure avatar is included
             },
           },
         ],
@@ -79,6 +74,8 @@ const getAllVideos = asyncHandler(async (req, res) => {
     }
   );
 
+  console.log("Pipeline:", JSON.stringify(pipeline, null, 2));
+
   const videoAggregate = Video.aggregate(pipeline);
 
   const options = {
@@ -88,10 +85,13 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
   const videos = await Video.aggregatePaginate(videoAggregate, options);
 
+  console.log("Fetched Videos:", JSON.stringify(videos, null, 2));
+
   return res
     .status(200)
     .json(new ApiResponse(200, videos, "Videos fetched successfully"));
 });
+
 
 const publishAVideo = asyncHandler(async (req, res) => {
   const { title, description, isPublished } = req.body;
@@ -239,9 +239,11 @@ const getVideoById = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
   const isGuest = req.query.guest === "true";
 
+  // Validate videoId
   if (!videoId?.trim()) throw new ApiError(400, "Video Id is missing");
   if (!isValidObjectId(videoId)) throw new ApiError(400, "Invalid VideoID");
 
+  // Aggregate pipeline to fetch video details
   const video = await Video.aggregate([
     {
       $match: {
@@ -346,10 +348,13 @@ const getVideoById = asyncHandler(async (req, res) => {
     },
   ]);
 
+  // Handle case when no video is found
   if (!video.length) throw new ApiError(404, "Video not found");
 
+  // Return video data
   return res.status(200).json(new ApiResponse(200, video[0], "Video found"));
 });
+
 
 const updateVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;

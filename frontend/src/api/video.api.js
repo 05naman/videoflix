@@ -15,7 +15,6 @@ export const getVideos = async (
   query = null,
   limit = null
 ) => {
-  console.log(userId);
   try {
     const url = new URL(`${BASE_URL}/video`);
     if (userId) url.searchParams.set("userId", userId);
