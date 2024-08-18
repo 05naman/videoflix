@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import { z } from "zod";
-// import { zodResolver } from "@hookform/resolvers/zod";
 import { SpecialButton, ProgressBar, VideoForm } from "../index.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useUploadVideo } from "../../hooks/video.hook.js";

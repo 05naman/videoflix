@@ -44,6 +44,8 @@ function PersonalInformation() {
   const { mutateAsync: updateAccount, isPending } = useUpdateAccountDetails();
 
   const onSubmit = async (data) => {
+    console.log("Submitting data:", data); // Debug data being submitted
+
     const { firstname, lastname, email } = data;
     const fullName = `${firstname} ${lastname}`;
 
@@ -52,11 +54,13 @@ function PersonalInformation() {
       lastname: lastName,
       email: user?.email,
     };
+
     const hasDataChanged =
       fullName !== `${initialData.firstname} ${initialData.lastname}` ||
       email !== initialData.email;
 
     if (!hasDataChanged) {
+      console.log("No changes detected.");
       return;
     }
 
@@ -65,7 +69,13 @@ function PersonalInformation() {
       email,
     };
 
-    await updateAccount(submitData);
+    console.log("Submitting to API:", submitData); // Debug API submission
+    try {
+      await updateAccount(submitData);
+      console.log("Update successful");
+    } catch (error) {
+      console.error("Error updating account:", error);
+    }
   };
 
   return (
@@ -76,7 +86,7 @@ function PersonalInformation() {
         <p className="text-gray-300">Update your photo and personal details.</p>
       </div>
       <div className="w-full sm:w-1/2 lg:w-2/3">
-        <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl ">
+        <form onSubmit={handleSubmit(onSubmit)} className="rounded-2xl">
           <div className="flex flex-wrap gap-y-4 p-4 bg-gray-900 rounded-2xl">
             <div className="w-full lg:w-1/2 lg:pr-2">
               <label htmlFor="firstname" className="mb-1 inline-block">
@@ -142,11 +152,14 @@ function PersonalInformation() {
               </div>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-end gap-4 p-4">
             <button
               type="button"
-              onClick={() => reset()}
+              onClick={() => {
+                console.log("Resetting form");
+                reset();
+              }}
               disabled={isPending}
               className="inline-block rounded bg-red-700 px-3 py-1.5 hover:bg-red-500"
             >

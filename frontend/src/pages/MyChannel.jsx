@@ -8,7 +8,7 @@ import { SpecialButton } from "../components";
 import SubscribeButton from "../components/SubscribeButton";
 import {  MyChannelLoading } from "../components/index.js";
 import { NavLink, Link } from "react-router-dom";
-import DefaultCoverPhoto from "../assets/DefaultCoverPhoto.png";
+import defaultCoverImage from "../assets/defaultCoverImage.jpg";
 
 function MyChannel() {
   const { username } = useParams();
@@ -55,7 +55,7 @@ function MyChannel() {
           className="absolute inset-0 overflow-hidden"
           style={{
             backgroundImage: `url(${
-              channelInfo?.coverImage?.url || DefaultCoverPhoto
+              channelInfo?.coverImage?.url || defaultCoverImage
             })`,
             backgroundSize: "cover",
             backgroundPosition: "center",

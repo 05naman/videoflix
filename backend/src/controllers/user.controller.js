@@ -299,7 +299,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Error while uploading on avatar")
 
   }
-  // console.log("AVATAR URL : ",avatar);
+  console.log("AVATAR URL : ",avatar);
 
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -310,9 +310,11 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
       }
     },
     { new: true }
-  ).select("-password")
+  ).select("-password -refreshToken")
 
-  // console.log("Updated user :" ,updatedUser);
+  console.log("Updated user :" ,updatedUser);
+  if(!updatedUser)
+  {throw new ApiError(501, error?.message || "Updating User Avatar failed");}
 
   return res
     .status(200)

@@ -2,10 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, Link, Outlet } from "react-router-dom";
 import defaultCoverImage from "../assets/defaultCoverImage.jpg";
-import { Avatar,CoverImage } from "../components/index";
+import defaultAvatar from "../assets/defaultAvatar.png";
+import { Avatar, CoverImage } from "../components/index.js";
 
 function EditProfile() {
   const channelInfo = useSelector((state) => state.auth.user);
+
   const editProfileItems = [
     {
       name: "Personal Info",
@@ -26,17 +28,21 @@ function EditProfile() {
       <div className="relative min-h-[150px] w-full pt-[16.28%]">
         <div className="absolute inset-0 overflow-hidden">
           <CoverImage
-            coverImage={channelInfo?.coverImage?.url || defaultCoverImage}
+            coverImage={channelInfo?.coverImage || defaultCoverImage}
+            alt="Cover Image"
           />
         </div>
       </div>
       <div className="px-4 pb-4">
         <div className="flex flex-wrap gap-4 pb-4 pt-6">
           <span className="relative -mt-12 inline-block h-28 w-28 shrink-0 rounded-full border-2">
-            <Avatar avatar={channelInfo?.avatar?.url} />
+            <Avatar
+              avatar={channelInfo?.avatar || defaultAvatar}
+              alt="Avatar"
+            />
           </span>
           <div className="mr-auto inline-block">
-            <h1 className="font-bolg text-xl">{channelInfo?.fullName}</h1>
+            <h1 className="font-bold text-xl">{channelInfo?.fullName}</h1>
             <p className="text-sm text-gray-400">@{channelInfo?.username}</p>
           </div>
           <div className="inline-block">
@@ -55,11 +61,10 @@ function EditProfile() {
             <li key={index} className="w-full">
               <NavLink  
                 to={`/edit-profile/${item.path}`}
-                className={
-                  ({ isActive }) =>
-                    isActive
-                      ? "w-full border-b-2 rounded bg-white px-3 py-1.5 text-black" // Active link color
-                      : "w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400" // Inactive link color
+                className={({ isActive }) =>
+                  isActive
+                    ? "w-full border-b-2 rounded bg-white px-3 py-1.5 text-black"
+                    : "w-full border-b-2 border-transparent px-3 py-1.5 text-gray-400"
                 }
               >
                 {item.name}

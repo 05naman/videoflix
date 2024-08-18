@@ -2,28 +2,24 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineCloudUpload, MdEdit } from "react-icons/md";
 import { useUpdateAvatar } from "../../hooks/user.hook";
 
-function AvatarInput({ initialAvatar }) {
+function Avatar({ avatar }) {
   const [profilePic, setProfilePic] = useState(null);
-  const [selectedProfile, setSelectedProfile] = useState(initialAvatar || "");
+  const [selectedProfile, setSelectedProfile] = useState(avatar || "");
 
   const { mutateAsync: uploadAvatar, isPending } = useUpdateAvatar();
 
+  // Update selectedProfile when avatar prop changes
   useEffect(() => {
-    setSelectedProfile(initialAvatar);
-  }, [initialAvatar]);
+    setSelectedProfile(avatar || "");
+  }, [avatar]);
 
   const handleUploadAvatar = async () => {
-    if (!profilePic) {
-      return; // No file selected
-    }
+    if (!profilePic) return; // No file selected
 
     try {
-      const response = await uploadAvatar(profilePic);
-
-      // Check and use the URL from the response
-      const avatarUrl = response?.data?.avatar;
-      if (avatarUrl) {
-        setSelectedProfile(avatarUrl);
+      const uploadedAvatar = await uploadAvatar(profilePic);
+      if (uploadedAvatar) {
+        setSelectedProfile(uploadedAvatar?.data?.avatar?.url || "");
         setProfilePic(null);
       }
     } catch (error) {
@@ -54,13 +50,8 @@ function AvatarInput({ initialAvatar }) {
           style={{ display: "none" }}
           disabled={isPending}
           onChange={(e) => {
-            const file = e.target.files[0];
-
-            if (file) {
-              const objectURL = URL.createObjectURL(file);
-              setSelectedProfile(objectURL);
-              setProfilePic(file);
-            }
+            setSelectedProfile(URL.createObjectURL(e.target.files[0]));
+            setProfilePic(e.target.files[0]);
           }}
         />
         <div className="relative h-full w-full justify-center items-center gap-4 z-30 flex flex-col">
@@ -85,4 +76,4 @@ function AvatarInput({ initialAvatar }) {
   );
 }
 
-export default AvatarInput;
+export default Avatar;
