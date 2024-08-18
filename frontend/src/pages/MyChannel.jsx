@@ -6,16 +6,17 @@ import { MdModeEditOutline } from "react-icons/md";
 import { setChannel } from "../store/channelSlice.js";
 import { SpecialButton } from "../components";
 import SubscribeButton from "../components/SubscribeButton";
-import {  MyChannelLoading } from "../components/index.js";
+import { MyChannelLoading } from "../components/index.js";
 import { NavLink, Link } from "react-router-dom";
 import defaultCoverImage from "../assets/defaultCoverImage.jpg";
+import defaultAvatar from "../assets/defaultAvatar.png";
 
 function MyChannel() {
   const { username } = useParams();
   const dispatch = useDispatch();
   const ownerUsername = useSelector((state) => state.auth.user?.username);
   const { data: channelInfo, isFetching } = useUserChannelInfo(username);
-  const isOwner = ownerUsername === username ? true : false;
+  const isOwner = ownerUsername === username;
 
   useEffect(() => {
     if (channelInfo) {
@@ -24,26 +25,11 @@ function MyChannel() {
   }, [channelInfo, dispatch]);
 
   const channelItems = [
-    {
-      name: "Videos",
-      path: "videos",
-    },
-    {
-      name: "Playlist",
-      path: "playlist",
-    },
-    {
-      name: "Tweets",
-      path: "tweets",
-    },
-    {
-      name: "Subscribers",
-      path: "subscribers",
-    },
-    {
-      name: "About",
-      path: "about",
-    },
+    { name: "Videos", path: "videos" },
+    { name: "Playlist", path: "playlist" },
+    { name: "Tweets", path: "tweets" },
+    { name: "Subscribers", path: "subscribers" },
+    { name: "About", path: "about" },
   ];
 
   if (isFetching) return <MyChannelLoading />;
@@ -55,7 +41,7 @@ function MyChannel() {
           className="absolute inset-0 overflow-hidden"
           style={{
             backgroundImage: `url(${
-              channelInfo?.coverImage?.url || defaultCoverImage
+              channelInfo?.coverImage || defaultCoverImage
             })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -67,7 +53,7 @@ function MyChannel() {
         <div className="flex flex-wrap gap-4 pb-4 pt-6">
           <span className="relative -mt-12 inline-block h-28 w-28 shrink-0 overflow-hidden rounded-full border-2">
             <img
-              src={channelInfo?.avatar?.url}
+              src={channelInfo?.avatar || defaultAvatar}
               alt="channelAvatar"
               className="h-full w-full object-cover"
             />
@@ -76,7 +62,7 @@ function MyChannel() {
             <h1 className="font-bold text-2xl">{channelInfo?.fullName}</h1>
             <p className="text-sm text-gray-400">@{channelInfo?.username}</p>
             <p className="text-sm text-gray-400">
-              {channelInfo?.subscribersCount} Subscribers ·  {" "}
+              {channelInfo?.subscribersCount} Subscribers ·{" "}
               {channelInfo?.subscribedToCount} Subscribed
             </p>
             <p>
@@ -93,11 +79,9 @@ function MyChannel() {
                   channelId={channelInfo?._id}
                 />
               )}
-
               {isOwner && (
                 <Link to="/edit-profile/personal-info">
-                  <SpecialButton className="flex items-center  gap-3">
-                    {" "}
+                  <SpecialButton className="flex items-center gap-3">
                     <MdModeEditOutline /> Edit
                   </SpecialButton>
                 </Link>
@@ -105,16 +89,15 @@ function MyChannel() {
             </div>
           </div>
         </div>
-        <ul className="no-scrollbar sticky top-[66px] z-[2]  flex flex-row justify-between text-wrap overflow-auto border-b-2 border-gray-400 bg-[#0e0e0e] py-2 sm:top-[82px]">
+        <ul className="no-scrollbar sticky top-[66px] z-[2] flex flex-row justify-between text-wrap overflow-auto border-b-2 border-gray-400 bg-[#0e0e0e] py-2 sm:top-[82px]">
           {channelItems.map((item, index) => (
             <li key={index} className="w-full">
               <NavLink
                 to={`/channel/${username}/${item.path}`}
-                className={
-                  ({ isActive }) =>
-                    isActive
-                      ? "text-lg w-full flex justify-center items-center border-b-2 border-blue-500 bg-white px-3 py-1.5 text-blue-600" // Active link color
-                      : "text-lg w-full flex justify-center items-center border-b-2  border-transparent px-3 py-1.5 text-gray-400" // Inactive link color
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-lg w-full flex justify-center items-center border-b-2 border-blue-500 bg-white px-3 py-1.5 text-blue-600" // Active link color
+                    : "text-lg w-full flex justify-center items-center border-b-2 border-transparent px-3 py-1.5 text-gray-400" // Inactive link color
                 }
               >
                 {item.name}
