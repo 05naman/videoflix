@@ -17,7 +17,7 @@ function Logo({ className, inline = false, mobile = false }) {
           mobile && "hidden md:block"
         }`}
       >
-        <div className="font-sans font-semibold text-2xl">Videoflix</div>
+        <div className="font-sans font-semibold text-3xl">Videoflix</div>
       </div>
     </div>
   );
