@@ -85,8 +85,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
   const videos = await Video.aggregatePaginate(videoAggregate, options);
 
-  console.log("Fetched Videos:", JSON.stringify(videos, null, 2));
-
   return res
     .status(200)
     .json(new ApiResponse(200, videos, "Videos fetched successfully"));
