@@ -80,15 +80,6 @@ function Signup() {
     formData.append("coverImage", data.coverImage[0]);
 
     try {
-      console.log("FormData being sent:", {
-        email: data.email,
-        username: data.username,
-        fullName: data.fullName,
-        password: data.password,
-        avatar: data.avatar[0]?.name, // Log file name for verification
-        coverImage: data.coverImage[0]?.name, // Log file name for verification
-      });
-
       const registeredUser = await registerUser(formData);
       if (registeredUser) {
         console.log("Registration successful:", registeredUser);
@@ -97,19 +88,16 @@ function Signup() {
           password: data.password,
         });
         if (loggedInUser) {
-          console.log("Login successful:", loggedInUser);
           dispatch(setUser(loggedInUser));
           navigate("/");
         }
       }
     } catch (error) {
-      console.error("Signup failed:", error);
       alert("Signup failed. Please try again.");
     }
   };
 
   const handleCloseLoginPopup = () => {
-    console.log("Closing login popup and navigating to home."); // Debug log
     setShowLoginPopup(false);
     navigate("/"); // Navigate to home
   };
