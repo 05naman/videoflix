@@ -9,26 +9,29 @@ const app = express();
 // Define allowed origins based on the environment
 const allowedOrigins = [
   process.env.CORS_ORIGIN_PRODUCTION,
-  process.env.CORS_ORIGIN_LOCAL,
-  "http://localhost:5173/",
-  "http://localhost:5174/",
-  "http://localhost:5175/"
 ];
 
 
 // Log allowed origins to verify they are set correctly
 console.log('Allowed Origins:', allowedOrigins);
 
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       // In production, only allow requests from the production frontend URL
+//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // In production, only allow requests from the production frontend URL
-      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin:process.env.CORS_ORIGIN_PRODUCTION,
     credentials: true,
   })
 );
