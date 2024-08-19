@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
@@ -9,29 +9,23 @@ const app = express();
 // Define allowed origins based on the environment
 const allowedOrigins = [
   process.env.CORS_ORIGIN_PRODUCTION,
+  process.env.CORS_ORIGIN_LOCAL
 ];
-
 
 // Log allowed origins to verify they are set correctly
 console.log('Allowed Origins:', allowedOrigins);
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       // In production, only allow requests from the production frontend URL
-//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//   })
-// );
-
+// Use dynamic CORS configuration
 app.use(
   cors({
-    origin:process.env.CORS_ORIGIN_PRODUCTION,
+    origin: (origin, callback) => {
+      // Allow requests from allowed origins
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -67,4 +61,5 @@ app.use("/api/v1/dashboard", dashboardRouter);
 app.use("/api/v1/subscription", subscriptionRouter);
 app.use("/api/v1/playlist", playlistRouter);
 app.use("/api/v1/healthcheck", healthRouter);
+
 export { app };
