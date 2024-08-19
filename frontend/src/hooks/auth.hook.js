@@ -22,9 +22,6 @@ export const useCurrentUser = () => {
   });
 };
 
-import { useMutation } from '@tanstack/react-query'; // Adjust import based on your setup
-import { registerUser } from './api'; // Import your API call function
-
 export const useRegisterUser = () => {
   return useMutation({
     mutationFn: (user) => registerUser(user),
