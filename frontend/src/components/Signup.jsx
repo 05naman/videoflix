@@ -72,9 +72,9 @@ function Signup() {
 
   const createAccount = async (data) => {
     const formData = new FormData();
-    formData.append("email", data.email);
-    formData.append("username", data.username);
     formData.append("fullName", data.fullName);
+    formData.append("username", data.username);
+    formData.append("email", data.email);
     formData.append("password", data.password);
     formData.append("avatar", data.avatar[0]);
     formData.append("coverImage", data.coverImage[0]);
