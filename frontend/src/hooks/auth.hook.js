@@ -22,11 +22,23 @@ export const useCurrentUser = () => {
   });
 };
 
+import { useMutation } from '@tanstack/react-query'; // Adjust import based on your setup
+import { registerUser } from './api'; // Import your API call function
+
 export const useRegisterUser = () => {
   return useMutation({
     mutationFn: (user) => registerUser(user),
+    onSuccess: (data) => {
+      // Handle success (e.g., show a success message or redirect)
+      console.log('User registered successfully:', data);
+    },
+    onError: (error) => {
+      // Handle error (e.g., show an error message)
+      console.error('Error registering user:', error);
+    },
   });
 };
+
 
 export const useChangePassword = () => {
   return useMutation({
