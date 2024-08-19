@@ -99,48 +99,30 @@ export const getCurrentUser = async () => {
 };
 
 // Register user function
-// Register user function
-export const registerUser = async (formData) => {
-  const data = new FormData();
-
-  // Check for required fields
-  if (formData.get("avatar")) {
-    data.append("avatar", formData.get("avatar"));
-  } else {
+export const registerUser = async (data) => {
+  const formData = new FormData();
+  if (!data.get("avatar")) {
     toast.error("Avatar is required");
     return;
   }
-
-  if (formData.get("coverImage")) {
-    data.append("coverImage", formData.get("coverImage"));
+  formData.append("avatar", data.get("avatar"));
+  if (data.get("coverImage")) {
+    formData.append("coverImage", data.get("coverImage"));
   }
-
-  data.append("username", formData.get("username"));
-  data.append("email", formData.get("email"));
-  data.append("password", formData.get("password"));
-  data.append("fullName", formData.get("fullName"));
-
+  formData.append("username", data.get("username"));
+  formData.append("email", data.get("email"));
+  formData.append("password", data.get("password"));
+  formData.append("fullName", data.get("fullName"));
   try {
-    const response = await API.post("/users/register", data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    toast.success(response.data?.message || 'Registration successful');
-    return response.data?.data;
+    const { data: responseData } = await API.post("/users/register", formData);
+    toast.success(responseData?.message);
+    return responseData?.data;
   } catch (error) {
-    console.error('Register user error:', error);
-
-    if (error.response?.status === 400) {
-      // Handle bad request specifically
-      toast.error(error.response?.data?.error || 'Invalid input');
-    } else {
-      toast.error(error.response?.data?.error || 'Registration failed');
-    }
-
-    throw error.response?.data?.error || 'Registration failed';
+    toast.error(error?.response?.data?.error);
+    throw error?.response?.data?.error;
   }
 };
+
 
 
 // Change password function
