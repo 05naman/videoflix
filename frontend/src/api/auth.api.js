@@ -101,6 +101,8 @@ export const getCurrentUser = async () => {
 // Register user function
 export const registerUser = async (data) => {
   const formData = new FormData();
+  console.log("AVATARRRRRR : ",data.get("avatar"));
+  
   if (!data.get("avatar")) {
     toast.error("Avatar is required");
     return;
