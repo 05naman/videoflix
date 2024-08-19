@@ -67,5 +67,4 @@ app.use("/api/v1/dashboard", dashboardRouter);
 app.use("/api/v1/subscription", subscriptionRouter);
 app.use("/api/v1/playlist", playlistRouter);
 app.use("/api/v1/healthcheck", healthRouter);
-
 export { app };
