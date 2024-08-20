@@ -392,7 +392,6 @@ const updateVideo = asyncHandler(async (req, res) => {
   if (thumbnailLocalPath) {
     const thumbnailFile = await uploadOnCloudinary(
       thumbnailLocalPath,
-      thumbnail_upOptions
     );
 
     if (!thumbnailFile) throw new ApiError(501, "Thumbnail uploading failed");
