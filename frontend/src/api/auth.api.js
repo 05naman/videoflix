@@ -5,17 +5,7 @@ import { BASE_URL } from "../constants";
 const API = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
-  headers: {
-    // 'Authorization': `Bearer ${YOUR_TOKEN}`,
-    'Content-Type': 'application/json',
-  },
-  timeout: 10000,
-  responseType: 'json',
-  validateStatus: function (status) {
-    return status >= 200 && status < 500;
-  },
 });
-
 
 // Interceptor to add Authorization header
 API.interceptors.request.use(
@@ -70,7 +60,6 @@ export const login = async (formData) => {
   }
 };
 
-
 // Logout function
 export const logout = async () => {
   try {
@@ -88,10 +77,7 @@ export const logout = async () => {
 // Get current user function
 export const getCurrentUser = async () => {
   try {
-    
     const { data } = await API.get("/users/current-user");
-    console.log(data);
-    
     return data?.data?.user;
   } catch (error) {
     throw error?.response?.data?.error;
@@ -101,8 +87,6 @@ export const getCurrentUser = async () => {
 // Register user function
 export const registerUser = async (data) => {
   const formData = new FormData();
-  console.log("AVATARRRRRR : ",data.get("avatar"));
-  
   if (!data.get("avatar")) {
     toast.error("Avatar is required");
     return;
@@ -124,8 +108,6 @@ export const registerUser = async (data) => {
     throw error?.response?.data?.error;
   }
 };
-
-
 
 // Change password function
 export const changePassword = async (newPassData) => {

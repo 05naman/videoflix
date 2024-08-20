@@ -27,38 +27,13 @@ function Signup() {
       }),
     fullName: z.string().min(4),
     password: z.string().min(6),
-    avatar: z.instanceof(FileList).refine((files) => {
-      if (files.length === 1) {
-        const file = files[0];
-        if (file.size > 5000000) {
-          throw new Error("File size should be less than 5MB");
-        }
-        if (!["image/jpeg", "image/png"].includes(file.type)) {
-          throw new Error("File type should be JPEG or PNG");
-        }
-        return true;
-      }
-      return false;
-    }, {
+    avatar: z.instanceof(FileList).refine((files) => files.length === 1, {
       message: "Avatar is required",
     }),
-    coverImage: z.instanceof(FileList).refine((files) => {
-      if (files.length === 1) {
-        const file = files[0];
-        if (file.size > 5000000) {
-          throw new Error("File size should be less than 5MB");
-        }
-        if (!["image/jpeg", "image/png"].includes(file.type)) {
-          throw new Error("File type should be JPEG or PNG");
-        }
-        return true;
-      }
-      return false;
-    }, {
+    coverImage: z.instanceof(FileList).refine((files) => files.length === 1, {
       message: "Cover Image is required",
     }),
   });
-
   const {
     register,
     handleSubmit,

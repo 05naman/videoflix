@@ -1,12 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { login, logout, getCurrentUser, registerUser, changePassword } from "../api/auth.api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  login,
+  logout,
+  getCurrentUser,
+  registerUser,
+  changePassword,
+} from "../api/auth.api";
 
 export const useLogin = () => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data) => login(data),
+    mutationFn: (user) => login(user),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("currentUser");
+    },
     retry: 0,
   });
 };
+
 export const useLogout = () => {
   return useMutation({
     mutationFn: () => logout(),
@@ -25,17 +36,8 @@ export const useCurrentUser = () => {
 export const useRegisterUser = () => {
   return useMutation({
     mutationFn: (user) => registerUser(user),
-    onSuccess: (data) => {
-      // Handle success (e.g., show a success message or redirect)
-      console.log('User registered successfully:', data);
-    },
-    onError: (error) => {
-      // Handle error (e.g., show an error message)
-      console.error('Error registering user:', error);
-    },
   });
 };
-
 
 export const useChangePassword = () => {
   return useMutation({

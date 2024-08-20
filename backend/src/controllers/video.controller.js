@@ -74,7 +74,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
     }
   );
 
-  console.log("Pipeline:", JSON.stringify(pipeline, null, 2));
 
   const videoAggregate = Video.aggregate(pipeline);
 
