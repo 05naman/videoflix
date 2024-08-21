@@ -1,7 +1,11 @@
 import React from "react";
 import { timeDuration, timeAgo } from ".././assets/timeAgo";
+import { object } from "zod";
 
 const VideolistCard = ({ video, owner }) => {
+  console.log("1 :",video?.likedVideo);
+
+  
   return (
     <>
       {video && (
@@ -23,7 +27,7 @@ const VideolistCard = ({ video, owner }) => {
           <div className="flex gap-x-2 md:w-7/12">
             <div className="h-10 w-10 shrink-0 md:hidden">
               <img
-                src={video?.ownerDetails?.avatar?.url || owner?.avatar?.url}
+                src={video?.ownerDetails?.avatar}
                 alt={video?.ownerDetails?.username || owner?.username}
                 className="h-full w-full rounded-full object-cover"
               />
@@ -38,7 +42,7 @@ const VideolistCard = ({ video, owner }) => {
               <div className="flex items-center gap-x-4">
                 <div className="mt-2 hidden h-10 w-10 shrink-0 md:block">
                   <img
-                    src={video?.ownerDetails?.avatar?.url || owner?.avatar?.url}
+                    src={video?.ownerDetails?.avatar}
                     alt={video?.ownerDetails?.username || owner?.username}
                     className="h-full w-full rounded-full object-cover"
                   />

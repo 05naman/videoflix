@@ -83,7 +83,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
   };
 
   const videos = await Video.aggregatePaginate(videoAggregate, options);
-
+  
   return res
     .status(200)
     .json(new ApiResponse(200, videos, "Videos fetched successfully"));
@@ -344,7 +344,7 @@ const getVideoById = asyncHandler(async (req, res) => {
       },
     },
   ]);
-
+  
   // Handle case when no video is found
   if (!video.length) throw new ApiError(404, "Video not found");
 

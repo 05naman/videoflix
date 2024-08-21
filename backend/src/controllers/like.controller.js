@@ -117,82 +117,89 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 })
 
 const getLikedVideos = asyncHandler(async (req, res) => {
-    const userId = req.user?._id;
-  
-    try {
-      const likedVideos = await Like.aggregate([
-        {
-          $match: {
-            likedBy: new mongoose.Types.ObjectId(userId),
-          },
+  const userId = req.user?._id;
+
+  if (!userId) {
+    return res.status(400).json({
+      status: 400,
+      message: "User ID is missing or invalid",
+    });
+  }
+
+  try {
+    const likedVideos = await Like.aggregate([
+      {
+        $match: {
+          likedBy: new mongoose.Types.ObjectId(userId),
         },
-        {
-          $lookup: {
-            from: "videos",
-            localField: "video",
-            foreignField: "_id",
-            as: "likedVideo",
-            pipeline: [
-              {
-                $match: {
-                  isPublished: true, // to filter only published videos
-                },
+      },
+      {
+        $lookup: {
+          from: "videos",
+          localField: "video",
+          foreignField: "_id",
+          as: "likedVideo",
+          pipeline: [
+            {
+              $match: {
+                isPublished: true, // Filter only published videos
               },
-              {
-                $lookup: {
-                  from: "users",
-                  localField: "owner",
-                  foreignField: "_id",
-                  as: "ownerDetails",
-                },
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "owner",
+                foreignField: "_id",
+                as: "ownerDetails",
               },
-              {
-                $unwind: "$ownerDetails",
-              },
-            ],
-          },
+            },
+            {
+              $unwind: "$ownerDetails",
+            },
+          ],
         },
-        {
-          $unwind: "$likedVideo",
+      },
+      {
+        $unwind: "$likedVideo",
+      },
+      {
+        $sort: {
+          "likedVideo.createdAt": -1, // Ensure sorting by video creation date
         },
-        {
-          $sort: {
-            createdAt: -1,
-          },
-        },
-        {
-          $project: {
-            _id: 0,
-            likedVideo: {
-              _id: 1,
-              "video.url": 1,
-              "thumbnail.url": 1,
-              owner: 1,
-              title: 1,
-              description: 1,
-              views: 1,
-              duration: 1,
-              createdAt: 1,
-              isPublished: 1,
-              ownerDetails: {
-                username: 1,
-                fullName: 1,
-                "avatar.url": 1,
-              },
+      },
+      {
+        $project: {
+          _id: 0,
+          likedVideo: {
+            _id: 1,
+            "video.url": 1,
+            "thumbnail.url": 1,
+            owner: 1,
+            title: 1,
+            description: 1,
+            views: 1,
+            duration: 1,
+            createdAt: 1,
+            isPublished: 1,
+            ownerDetails: {
+              username: 1,
+              fullName: 1,
+              "avatar.url": 1,
             },
           },
         },
-      ]);
-  
-      return res
-        .status(200)
-        .json(
-          new ApiResponse(200, likedVideos, "Liked videos fetched successfully")
-        );
-    } catch (error) {
-      throw new ApiError(500, error?.message || "Failed to get liked videos");
-    }
-  });
+      },
+    ]);
+
+    return res.status(200).json(
+      new ApiResponse(200, likedVideos, "Liked videos fetched successfully")
+    );
+  } catch (error) {
+    console.error("Error fetching liked videos:", error); // Log the error
+    throw new ApiError(500, error?.message || "Failed to get liked videos");
+  }
+});
+
   
 
 
