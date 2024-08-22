@@ -168,7 +168,7 @@ const getAllTweets = asyncHandler(async (req, res) => {
             {
               $project: {
                 username: 1,
-                "avatar.url": 1,
+                avatar: 1,
               },
             },
           ],

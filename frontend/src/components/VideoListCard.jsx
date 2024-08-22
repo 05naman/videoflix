@@ -3,8 +3,6 @@ import { timeDuration, timeAgo } from ".././assets/timeAgo";
 import { object } from "zod";
 
 const VideolistCard = ({ video, owner }) => {
-  console.log("1 :",video?.likedVideo);
-
   
   return (
     <>

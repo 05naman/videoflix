@@ -22,7 +22,7 @@ function NextVideoCard({ video, owner }) {
         <div className="flex gap-x-2 px-2 pb-4 pt-1 md:w-7/12 md:px-0 md:py-0.5">
           <div className="h-12 w-12 shrink-0 md:hidden">
             <img
-              src={video?.ownerDetails?.avatar?.url || owner?.avatar?.url}
+              src={video?.ownerDetails?.avatar || owner?.avatar}
               alt="reactpatterns"
               className="h-full w-full rounded-full object-cover"
             />

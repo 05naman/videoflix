@@ -4,7 +4,7 @@ function ChannelSubscribed({ channel }) {
   return (
     <div className="flex flex-col items-center gap-2  rounded-lg">
       <img
-        src={channel?.avatar?.url}
+        src={channel?.avatar}
         alt={`${channel?.username}'s avatar`}
         className="w-12 h-12 rounded-full object-cover"
       />

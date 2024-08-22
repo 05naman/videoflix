@@ -40,7 +40,7 @@ function Tweet({ tweet, isOwner }) {
       <div className="flex gap-3  py-4 last:border-b-transparent">
         <div className="h-14 w-14 shrink-0">
           <img
-            src={tweet?.ownerDetails?.avatar?.url}
+            src={tweet?.ownerDetails?.avatar}
             alt={tweet?.ownerDetails?.username}
             className="h-full w-full rounded-full object-cover"
           />

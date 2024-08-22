@@ -32,9 +32,6 @@ function Subscriptions() {
           ))}
       </div>
       <div>
-        <h1 className="text-2xl font-semibold  my-2">
-          Latest Videos from Subscriptions
-        </h1>
         <div className="flex flex-col gap-4 p-4">
           {subscriptions &&
             subscriptions.map((channel) => (
