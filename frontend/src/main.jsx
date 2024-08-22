@@ -122,7 +122,7 @@ const router = createBrowserRouter([
           {
             path: "tweets",
             element: (
-              <AuthLayout auth>
+              <AuthLayout auth >
                 <Suspense fallback={<SpinnerLoading />}>
                   <ChannelTweets />
                 </Suspense>
@@ -256,7 +256,7 @@ const router = createBrowserRouter([
       {
         path: "/tweets",
         element: (
-          <AuthLayout auth={false}>
+          <AuthLayout auth pageName={"Tweets"}>
             <Suspense fallback={<SpinnerLoading />}>
               <Tweets />
             </Suspense>

@@ -7,6 +7,7 @@ import {
   FaTv,
   FaFilm,
   FaUsers,
+  FaTwitter,
 } from "react-icons/fa";
 
 export const GuestComponent = ({ title, description, icon: Icon }) => (
@@ -70,5 +71,13 @@ export const GuestNow = () => (
     title="Stay up to date"
     description="Sign in to see what's happening right now on our platform."
     icon={FaTv}
+  />
+);
+
+export const GuestTweets = () => (
+  <GuestComponent
+    title="Share your thoughts"
+    description="Sign in to tweet and interact with other users on the platform."
+    icon={FaTwitter}
   />
 );
