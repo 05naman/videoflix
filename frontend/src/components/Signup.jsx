@@ -34,6 +34,7 @@ function Signup() {
       message: "Cover Image is required",
     }),
   });
+  
   const {
     register,
     handleSubmit,
