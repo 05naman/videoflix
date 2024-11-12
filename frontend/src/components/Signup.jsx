@@ -57,7 +57,7 @@ function Signup() {
     try {
       const registeredUser = await registerUser(formData);
       if (registeredUser) {
-        console.log("Registration successful:", registeredUser);
+        // console.log("Registration successful:", registeredUser);
         const loggedInUser = await loginUser({
           usernameOrEmail: data.email,
           password: data.password,
