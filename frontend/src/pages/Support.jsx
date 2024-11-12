@@ -15,12 +15,12 @@ const Support = () => {
     {
         name: "LinkedIn",
         icon: FaLinkedin,
-        url: "",
+        url: "www.linkedin.com/in/naman-nigam",
     },
     { 
         name: "GitHub",
         icon: FaGithub,
-        url: "" },
+        url: "https://github.com/05naman" },
     {
         name: "Discord",
         icon: FaDiscord,
