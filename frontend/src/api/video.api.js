@@ -105,7 +105,7 @@ export const editVideo = async (videoId, data) => {
 };
 
 export const getNextVideos = async (videoId) => {
-  console.log("Fetching next videos for videoId:", videoId);  // Add this line for debugging
+  // console.log("Fetching next videos for videoId:", videoId);
   try {
     const { data } = await API.get(`/video/next/${videoId}`);
     return data?.data;
