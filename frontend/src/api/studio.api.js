@@ -28,7 +28,7 @@ export const getChannelVideos = async () => {
 export const getChannelAbouts = async () => {
   try {
     const { data } = await API.get("/dashboard/about");
-    console.log(data.data);
+    // console.log(data.data);
     return data.data;
   } catch (error) {
     toast.error(error.response.data.message);
