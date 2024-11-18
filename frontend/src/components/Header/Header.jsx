@@ -118,7 +118,7 @@ function Header() {
               ))}
             </ul>
           </IconContext.Provider>
-          <div className="mb-8 mt-auto ml-36 flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0 sm:pl-12 sm:pr-8">
+          <div className="mb-8 mt-auto ml-36 flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0 sm:pl-8 sm:pr-8">
             <Button className="bg-green-800 " onClick={handleUploadVideo}>Upload Video</Button>
   
             {authStatus && userData && (
