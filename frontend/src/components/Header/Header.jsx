@@ -72,7 +72,7 @@ function Header() {
   return (
     <header className="z-[9999] sticky inset-x-0 top-0 w-full text-white bg-[#0e0e0e] px-4">
       <nav className="mx-auto flex max-w-7xl items-center py-2">
-        <Link to="/" className="flex items-center w-2/12 mr-12">
+        <Link to="/" className="flex items-center mr-12">
           <Logo className="shrink-0 sm:w-[8rem]" mobile={true} />
         </Link>
   
