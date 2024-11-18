@@ -5,7 +5,7 @@ function Videocard({ video }) {
   
   return (
     <div className="w-full">
-      <div className="relative mb-2 w-full pt-[56%]">
+      <div className="relative mb-2 w-full pt-[50%]">
         <div className="absolute inset-0">
           {video?.thumbnail?.url ? (
             <img
