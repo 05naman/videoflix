@@ -75,11 +75,11 @@ function Header() {
         <Link to="/" className="flex ml-4">
           <Logo className="shrink-0 sm:w-[8rem]" mobile={true} />
         </Link>
-
+  
         <div className="flex-grow flex justify-center w-10/12 ml-48">
           <Search />
         </div>
-
+  
         <button
           onClick={handleSideBar}
           className="cursor-pointer group peer ml-4 flex w-6 shrink-0 flex-wrap gap-y-1.5 sm:hidden"
@@ -118,52 +118,51 @@ function Header() {
               ))}
             </ul>
           </IconContext.Provider>
-          <div className="mb-8 mt-auto flex w-full flex-wrap items-center justify-end gap-4 px-4 sm:mb-0 sm:mt-0 sm:px-0">
-            {/* Upload Video Button */}
-            <Button className="bg-green-800" onClick={handleUploadVideo}>
-              Upload Video
-            </Button>
-
+          <div className="mb-8 mt-auto ml-36 flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
+            <Button className="bg-green-800 " onClick={handleUploadVideo}>Upload Video</Button>
+  
             {authStatus && userData && (
-              <div className="flex items-center gap-4">
-                {/* Logout Button */}
+              <>
                 <Button
                   className="bg-red-700 hover:bg-red-500"
                   onClick={handleLogout}
                 >
                   Logout
                 </Button>
-
-                {/* Avatar Section */}
-                <Link
-                  to={`/channel/${userData?.username}/videos`}
-                  className="flex items-center gap-4 text-left"
-                >
-                  <img
-                    src={userData.avatar}
-                    alt={userData.username}
-                    className="object-cover h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12"
-                  />
-                  <div className="hidden sm:block">
-                    <h6 className="font-semibold">{userData.fullName}</h6>
-                    <p className="text-sm text-gray-300">{userData.username}</p>
-                  </div>
-                </Link>
-              </div>
+                <div className="mb-8 mt-auto px-4 sm:mb-0 sm:mt-0 sm:px-0">
+                  <Link
+                    to={`/channel/${userData?.username}/videos`}
+                    className="flex w-full gap-4 text-left sm:items-center"
+                  >
+                    <img
+                      src={userData.avatar}
+                      alt={userData.username}
+                      className="object-cover h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12"
+                    />
+                    <div className="w-full pt-2 sm:hidden">
+                      <h6 className="font-semibold">{userData.fullName}</h6>
+                      <p className="text-sm text-gray-300">
+                        {userData.username}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              </>
             )}
-
+  
             {!authStatus && (
-              <Link to="/login">
-                <button className="bg-blue-800 rounded px-3 py-2 text-center text-white transition-all duration-150 ease-in-out sm:w-auto">
-                  Log in
-                </button>
-              </Link>
+              <>
+                <Link to="/login">
+                  <button className="bg-blue-800 mr-1 rounded px-3 py-2 text-center text-white transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto ">Log in</button>
+                </Link>
+              </>
             )}
           </div>
         </div>
       </nav>
     </header>
   );
+  
 }
 
 export default Header;
