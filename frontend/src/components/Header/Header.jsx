@@ -71,12 +71,12 @@ function Header() {
 
   return (
     <header className="z-[9999] sticky inset-x-0 top-0 w-full text-white bg-[#0e0e0e]">
-      <nav className="mx-auto flex max-w-7xl items-center py-2">
-        <Link to="/" className="flex items-center mr-12">
+      <nav className=" flex max-w-7xl items-center py-2">
+        <Link to="/" className="flex">
           <Logo className="shrink-0 sm:w-[8rem]" mobile={true} />
         </Link>
   
-        <div className="flex-grow flex justify-center w-10/12">
+        <div className="flex-grow flex justify-center w-10/12 ml-48">
           <Search />
         </div>
   
@@ -118,8 +118,8 @@ function Header() {
               ))}
             </ul>
           </IconContext.Provider>
-          <div className="mb-8 mt-auto flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
-            <Button className="bg-green-800" onClick={handleUploadVideo}>Upload Video</Button>
+          <div className="mb-8 mt-auto ml-20 flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
+            <Button className="bg-green-800 ml-24" onClick={handleUploadVideo}>Upload Video</Button>
   
             {authStatus && userData && (
               <>

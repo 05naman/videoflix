@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 
 function Logo({ className, inline = false, mobile = false }) {
   return (
     <div
-      className={`font-bold text-xl flex items-center justify-center w-full ${className} text-[#FFFFFF] `}
+      className={`font-bold text-xl flex items-center w-full ${className} text-[#FFFFFF]`}
     >
       <img
         src={logo}
@@ -13,7 +13,7 @@ function Logo({ className, inline = false, mobile = false }) {
       />
 
       <div
-        className={`flex ${inline ? "flex-row" : " flex-col"} ${
+        className={`flex ${inline ? "flex-row" : "flex-col"} ${
           mobile && "hidden md:block"
         }`}
       >
