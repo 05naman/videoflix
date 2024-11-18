@@ -117,36 +117,34 @@ function Header() {
               ))}
             </ul>
           </IconContext.Provider>
-          <div className="mb-8 mt-auto flex w-full flex-wrap gap-4 px-4 justify-center sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
+          <div className="mb-8 mt-auto flex w-full flex-wrap items-center justify-between gap-4 px-4 sm:mb-0 sm:mt-0 sm:px-0">
             <Button className="bg-green-800" onClick={handleUploadVideo}>
               Upload Video
             </Button>
 
             {authStatus && userData && (
-              <>
+              <div className="flex items-center gap-4">
                 <Button
                   className="bg-red-700 hover:bg-red-500"
                   onClick={handleLogout}
                 >
                   Logout
                 </Button>
-                <div className="flex items-center space-x-4 sm:space-x-2">
-                  <Link
-                    to={`/channel/${userData?.username}/videos`}
-                    className="flex items-center gap-4 text-left"
-                  >
-                    <img
-                      src={userData.avatar}
-                      alt={userData.username}
-                      className="object-cover h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12"
-                    />
-                    <div className="hidden sm:block">
-                      <h6 className="font-semibold">{userData.fullName}</h6>
-                      <p className="text-sm text-gray-300">{userData.username}</p>
-                    </div>
-                  </Link>
-                </div>
-              </>
+                <Link
+                  to={`/channel/${userData?.username}/videos`}
+                  className="flex items-center gap-4 text-left"
+                >
+                  <img
+                    src={userData.avatar}
+                    alt={userData.username}
+                    className="object-cover h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12"
+                  />
+                  <div className="hidden sm:block">
+                    <h6 className="font-semibold">{userData.fullName}</h6>
+                    <p className="text-sm text-gray-300">{userData.username}</p>
+                  </div>
+                </Link>
+              </div>
             )}
 
             {!authStatus && (
