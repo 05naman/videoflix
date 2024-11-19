@@ -1,19 +1,19 @@
 import React from "react";
 import logo from "../assets/logo.png";
 
-function Logo({ className, inline = false, mobile = false }) {
+function Logo({ className = "", inline = false, mobile = false }) {
   return (
     <div
-      className={`font-bold text-xl flex items-center w-full ${className} text-[#FFFFFF]`}
+      className={`font-bold text-xl flex justify-center items-center ${className} text-[#FFFFFF]`}
     >
       <img
         src={logo}
         alt="logo"
-        className="w-16 h-16 inline-block mr-2"
+        className="w-16 h-16 inline-block"
       />
 
       <div
-        className={`flex ${inline ? "flex-row" : "flex-col"} ${
+        className={`flex ${inline ? "flex-row ml-2" : "flex-col mt-2"} ${
           mobile && "hidden md:block"
         }`}
       >
