@@ -41,20 +41,6 @@ Based on the comprehensive analysis of the VideoFlix codebase:
 - **Estimated Lines**: ~800-1,200 lines
 - **Languages**: JavaScript (ES6+)
 
-PORT =5000
-MONGODB_URI=mongodb+srv://naman05:nigamnamanraj@cluster0.rc6pu.mongodb.net
-ACCESS_TOKEN_SECRET=nam
-ACCESS_TOKEN_EXPIRY=1d
-REFRESH_TOKEN_SECRET=nn
-REFRESH_TOKEN_EXPIRY=10d
-CLOUDINARY_CLOUD_NAME=dhepecq2q
-CLOUDINARY_API_KEY=227945393942639
-CLOUDINARY_API_SECRET=pUrqnil9aFdAoRPR9Qw2-EpS9CQ
-CORS_ORIGIN_LOCAL=http://localhost:5173
-CORS_ORIGIN_PRODUCTION=https://videoflix-hazel.vercel.app
-
-
-
 
 #### Frontend Code
 - **Total Files**: 50+ files
