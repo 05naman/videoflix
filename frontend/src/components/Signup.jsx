@@ -81,23 +81,23 @@ function Signup() {
   if (!showLoginPopup) return null; // Prevent rendering if popup is closed
 
   return (
-    <div className="h-screen overflow-y-auto bg-[#0e0e0e] text-white flex justify-center items-center">
-      <div className="relative w-full max-w-3xl bg-gray-100 text-black rounded-xl p-12 border border-black/10 shadow-xl">
+    <div className="min-h-screen overflow-y-auto bg-[#0e0e0e] text-white flex justify-center items-center p-4">
+      <div className="relative w-full max-w-3xl bg-gray-100 text-black rounded-xl p-6 sm:p-8 md:p-12 border border-black/10 shadow-xl">
         <button
           onClick={handleCloseLoginPopup}
-          className="absolute top-4 right-4 bg-gray-100 text-black p-2 rounded-full transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-gray-100 text-black p-2 rounded-full transition-colors z-10"
           aria-label="Close"
         >
-          <FiX size={22} />
+          <FiX size={20} className="sm:w-6 sm:h-6" />
         </button>
 
-        <div className="w-full flex justify-center items-center">
-          <Logo className="w-full text-center text-3xl font-semibold text-black mr-5" inline={true} />
+        <div className="w-full flex justify-center items-center mb-4 sm:mb-6">
+          <Logo className="w-full text-center text-2xl sm:text-3xl font-semibold text-black" inline={true} />
         </div>
 
-        <div className="w-full flex flex-col items-center justify-center mb-6">
-          <h1 className="text-2xl font-bold mb-2 ml-5">Signup</h1>
-          <span>
+        <div className="w-full flex flex-col items-center justify-center mb-4 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold mb-2">Signup</h1>
+          <span className="text-sm sm:text-base text-center">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-500 inline">
               Login
@@ -105,30 +105,30 @@ function Signup() {
           </span>
         </div>
 
-        <form onSubmit={handleSubmit(createAccount)} className="flex flex-col space-y-6">
+        <form onSubmit={handleSubmit(createAccount)} className="flex flex-col space-y-4 sm:space-y-6">
           {/* Row 1 */}
-          <div className="flex flex-wrap gap-6">
-            <div className="flex-1 min-w-[200px]">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex-1 w-full">
               <Input
                 label={"Full Name"}
                 type="text"
                 placeholder="Enter your full name"
                 id={"fullName"}
                 {...register("fullName")}
-                className="text-lg"
+                className="text-base sm:text-lg"
               />
               {errors.fullName && (
                 <span className="text-red-500 text-sm">{errors.fullName.message}</span>
               )}
             </div>
-            <div className="flex-1 min-w-[200px]">
+            <div className="flex-1 w-full">
               <Input
                 label={"Username"}
                 type="text"
                 placeholder="username"
                 id={"username"}
                 {...register("username")}
-                className="text-lg"
+                className="text-base sm:text-lg"
               />
               {errors.username && (
                 <span className="text-red-500 text-sm">{errors.username.message}</span>
@@ -137,28 +137,28 @@ function Signup() {
           </div>
 
           {/* Row 2 */}
-          <div className="flex flex-wrap gap-6">
-            <div className="flex-1 min-w-[200px]">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex-1 w-full">
               <Input
                 label={"Email"}
                 type="email"
                 placeholder="you@example.com"
                 id={"email"}
                 {...register("email")}
-                className="text-lg"
+                className="text-base sm:text-lg"
               />
               {errors.email && (
                 <span className="text-red-500 text-sm">{errors.email.message}</span>
               )}
             </div>
-            <div className="flex-1 min-w-[200px]">
+            <div className="flex-1 w-full">
               <Input
                 label={"Password"}
                 type="password"
                 placeholder="*******"
                 id={"password"}
                 {...register("password")}
-                className="text-lg mb-4"
+                className="text-base sm:text-lg mb-4"
               />
               {errors.password && (
                 <span className="text-red-500 text-sm">{errors.password.message}</span>
@@ -167,16 +167,16 @@ function Signup() {
           </div>
 
           {/* Row 3 */}
-          <div className="flex flex-wrap gap-6">
-            <div className="flex-1 min-w-[200px]">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex-1 w-full">
               <div className="mb-4">
-                <label className="block text-lg font-medium text-teal-500">
+                <label className="block text-base sm:text-lg font-medium text-teal-500">
                   Profile Picture
                 </label>
                 <input
                   type="file"
                   {...register("avatar")}
-                  className="text-black mt-2"
+                  className="text-black mt-2 w-full text-sm sm:text-base"
                 />
                 {errors.avatar && (
                   <span className="text-red-500 text-sm">{errors.avatar.message}</span>
@@ -184,15 +184,15 @@ function Signup() {
               </div>
             </div>
 
-            <div className="flex-1 min-w-[200px]">
+            <div className="flex-1 w-full">
               <div className="mb-4">
-                <label className="block text-lg font-medium text-teal-500">
+                <label className="block text-base sm:text-lg font-medium text-teal-500">
                   Cover Image
                 </label>
                 <input
                   type="file"
                   {...register("coverImage")}
-                  className="text-black mt-2"
+                  className="text-black mt-2 w-full text-sm sm:text-base"
                 />
                 {errors.coverImage && (
                   <span className="text-red-500 text-sm">{errors.coverImage.message}</span>
@@ -200,9 +200,9 @@ function Signup() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4 sm:mt-5">
             <Button
-              className="hover:bg-teal-500 hover:text-white bg-black text-lg mt-5 w-44"
+              className="hover:bg-teal-500 hover:text-white bg-black text-base sm:text-lg mt-2 sm:mt-5 w-full sm:w-44 px-6 py-3 sm:py-2"
               type="submit"
               disabled={isSubmitting}
             >
