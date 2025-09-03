@@ -2,34 +2,42 @@ import React, { useEffect, useState } from "react";
 import { Header, SpinnerLoading } from "./components/index.js";
 import { Outlet } from "react-router-dom";
 import SideBar from "./components/SideBar";
-// import { useCurrentUser } from "./hooks/auth.hook.js";
-// import { setUser } from "./store/authSlice.js";
-// import { useDispatch, useSelector } from "react-redux";
+import { useCurrentUser } from "./hooks/auth.hook.js";
+import { setUser } from "./store/authSlice.js";
+import { useDispatch } from "react-redux";
 
 function App() {
-  // const dispatch = useDispatch();
-  // const [isLoading, setIsLoading] = useState(true);
-  // const { data: userData, isFetching, error } = useCurrentUser();
-  // const user = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
+  const [isInitialized, setIsInitialized] = useState(false);
+  const { data: userData, isFetching, error } = useCurrentUser();
 
-  // useEffect(() => {
-  //   if (!isFetching) {
-  //     if (userData && !user) {
-  //       dispatch(setUser(userData));
-  //     }
-  //     setIsLoading(false);
-  //   }
-  // }, [userData, isFetching, dispatch, user]);
+  // Initialize authentication only once on app load
+  useEffect(() => {
+    if (!isFetching && !isInitialized) {
+      if (userData) {
+        dispatch(setUser(userData));
+      } else {
+        // No user data means not authenticated, ensure user is cleared
+        dispatch(setUser(null));
+      }
+      setIsInitialized(true);
+    }
+  }, [userData, isFetching, dispatch, isInitialized]);
 
-  // if (isLoading || isFetching) {
-  //   return <SpinnerLoading />;
-  // }
+  // Handle error case
+  useEffect(() => {
+    if (error && !isInitialized) {
+      console.log("Authentication error:", error);
+      // On error, ensure user is cleared
+      dispatch(setUser(null));
+      setIsInitialized(true);
+    }
+  }, [error, isInitialized]);
 
-  // if (error) {
-  //   console.log(error);
-    
-  //   return <div className="text-red-500">Error loading user data. Please try again later.</div>;
-  // }
+  // Show loading only during initial authentication check
+  if (!isInitialized && isFetching) {
+    return <SpinnerLoading />;
+  }
 
   return (
     <div className="h-screen overflow-y-auto bg-[#0e0e0e] text-white">

@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-    status:false,
+    authStatus:false,
     user:null
 }
 
@@ -19,7 +19,7 @@ const authSlice = createSlice({
             }
           },
           unSetUser: (state) => {
-            state.status = false;
+            state.authStatus = false;
             state.user = null;
           }
     }

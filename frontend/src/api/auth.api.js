@@ -10,10 +10,8 @@ const API = axios.create({
 // Interceptor to add Authorization header
 API.interceptors.request.use(
   async (config) => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
+    // Cookies are automatically sent with withCredentials: true
+    // No need to manually add Authorization header
     return config;
   },
   (error) => {
@@ -32,11 +30,9 @@ API.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        console.log("this refresh access token called");
-        const { accessToken } = await refreshAccessToken();
-        localStorage.setItem('accessToken', accessToken);
-        API.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        await refreshAccessToken();
+        // Cookies are automatically updated by the backend
+        // Just retry the original request
         return API(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
@@ -50,8 +46,7 @@ API.interceptors.response.use(
 export const login = async (formData) => {
   try {
     const { data } = await API.post("/users/login", formData);
-    localStorage.setItem('accessToken', data.data.accessToken);
-    API.defaults.headers.common["Authorization"] = `Bearer ${data.data.accessToken}`;
+    // Cookies are automatically set by the backend
     toast.success(data?.message);
     return data?.data?.user;
   } catch (error) {
@@ -64,8 +59,7 @@ export const login = async (formData) => {
 export const logout = async () => {
   try {
     const { data } = await API.post("/users/logout");
-    localStorage.removeItem('accessToken');
-    delete API.defaults.headers.common["Authorization"];
+    // Cookies are automatically cleared by the backend
     toast.success(data?.message);
     return data;
   } catch (error) {

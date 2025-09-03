@@ -3,13 +3,18 @@ import Logo from "../Logo";
 
 function SpinnerLoading() {
   return (
-    <div className="flex items-center justify-center h-screen bg-black z-50">
-      <div className="flex items-center gap-4">
-        <Logo className="w-24 h-auto" />
-        <div className="flex flex-row gap-2">
-          <div className="w-3 h-3 rounded-full bg-white animate-bounce [animation-delay:.7s]"></div>
-          <div className="w-3 h-3 rounded-full bg-white animate-bounce [animation-delay:.3s]"></div>
-          <div className="w-3 h-3 rounded-full bg-white animate-bounce [animation-delay:.7s]"></div>
+    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800 z-[9999]">
+      <div className="flex items-center gap-8">
+        {/* Logo with subtle animation */}
+        <div className="animate-pulse">
+          <Logo className="w-32 h-auto" />
+        </div>
+        
+        {/* Animated dots on the right side */}
+        <div className="flex gap-2 mt-5">
+          <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:0s] [animation-duration:1.4s]"></div>
+          <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:0.2s] [animation-duration:1.4s]"></div>
+          <div className="w-2 h-2 bg-white rounded-full animate-bounce [animation-delay:0.4s] [animation-duration:1.4s]"></div>
         </div>
       </div>
     </div>
