@@ -15,17 +15,17 @@ function Search() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex items-center w-full max-w-2xl mx-auto bg-gray-100 rounded-full shadow-lg"
+      className="flex items-center w-full bg-gray-100 rounded-full shadow-lg border border-gray-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 transition-all"
     >
       <input
         type="text"
-        placeholder="Search"
+        placeholder="Search videos..."
         {...register("query", { required: true })}
-        className="w-full py-2 px-4 rounded-full bg-gray-100 text-gray-800 outline-none placeholder-gray-500"
+        className="w-full py-2.5 px-4 rounded-l-full bg-transparent text-gray-800 outline-none placeholder-gray-500 text-sm sm:text-base"
       />
       <button
         type="submit"
-        className="flex items-center justify-center p-3 text-gray-500 hover:text-gray-700 transition-colors"
+        className="flex items-center justify-center p-2.5 pr-4 text-gray-500 hover:text-gray-700 transition-colors rounded-r-full hover:bg-gray-200"
       >
         <FaSearch className="text-lg" />
       </button>

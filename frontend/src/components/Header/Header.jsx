@@ -70,46 +70,94 @@ function Header() {
   }, [location.pathname]);
 
   return (
-    <header className="z-[9999] sticky inset-x-0 top-0 w-full text-white bg-[#0e0e0e]">
-      <nav className=" flex max-w-7xl items-center py-2">
-        <Link to="/" className="flex ml-9">
-          <Logo className="shrink-0 sm:w-[8rem]" mobile={true} />
-        </Link>
-  
-        <div className="flex-grow flex justify-center w-10/12 ml-48">
-          <Search />
+    <header className="z-[9999] sticky inset-x-0 top-0 w-full text-white bg-[#0e0e0e] border-b border-gray-800">
+      <nav className="flex items-center justify-between px-4 py-3 max-w-7xl mx-auto">
+        {/* Logo Section - Left */}
+        <div className="flex items-center flex-shrink-0">
+          <Link to="/" className="flex items-center">
+            <Logo className="w-24 sm:w-32 md:w-36" mobile={true} />
+          </Link>
         </div>
-  
+
+        {/* Search Bar Section - Center */}
+        <div className="flex-1 flex justify-center px-4 max-w-2xl mx-auto">
+          <div className="w-full">
+            <Search />
+          </div>
+        </div>
+
+        {/* Desktop Actions - Right */}
+        <div className="hidden md:flex items-center space-x-3 flex-shrink-0">
+          <Button 
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors" 
+            onClick={handleUploadVideo}
+          >
+            Upload Video
+          </Button>
+
+          {authStatus && userData ? (
+            <div className="flex items-center space-x-3">
+              <Button
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              <Link
+                to={`/channel/${userData?.username}/videos`}
+                className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+              >
+                <img
+                  src={userData.avatar}
+                  alt={userData.username}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+                <span className="text-sm font-medium hidden lg:block">{userData.fullName}</span>
+              </Link>
+            </div>
+          ) : (
+            <Link to="/login">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
+                Log in
+              </button>
+            </Link>
+          )}
+        </div>
+
+        {/* Mobile Menu Button */}
         <button
           onClick={handleSideBar}
-          className="cursor-pointer group peer ml-4 flex w-6 shrink-0 flex-wrap gap-y-1.5 sm:hidden"
+          className="md:hidden cursor-pointer group flex w-6 shrink-0 flex-wrap gap-y-1.5 ml-2"
         >
-          <span className="block h-[2px] w-full bg-white group-hover:bg-blue-400"></span>
-          <span className="block h-[2px] w-2/3 bg-white group-hover:bg-blue-400"></span>
-          <span className="block h-[2px] w-full bg-white group-hover:bg-blue-400"></span>
+          <span className="block h-[2px] w-full bg-white group-hover:bg-blue-400 transition-colors"></span>
+          <span className="block h-[2px] w-2/3 bg-white group-hover:bg-blue-400 transition-colors"></span>
+          <span className="block h-[2px] w-full bg-white group-hover:bg-blue-400 transition-colors"></span>
         </button>
+
+        {/* Mobile Sidebar */}
         <div
           className={`fixed inset-y-0 right-0 flex w-full max-w-xs shrink-0 ${
             sideBar ? "translate-x-0" : "translate-x-full"
-          } flex-col border-l border-white bg-[#0e0e0e] duration-200 sm:static sm:ml-4 sm:w-auto sm:translate-x-0 sm:border-none`}
+          } flex-col border-l border-gray-700 bg-[#0e0e0e] duration-200 md:hidden z-50`}
         >
-          <div className="relative flex w-full h-[4rem] items-center justify-end border-b border-white px-4 py-2 sm:hidden">
+          <div className="relative flex w-full h-16 items-center justify-end border-b border-gray-700 px-4">
             <button
               onClick={handleSideBar}
-              className="inline-block cursor-pointer"
+              className="inline-block cursor-pointer hover:opacity-70 transition-opacity"
             >
-              <IoIosCloseCircleOutline className="w-9 h-9" />
+              <IoIosCloseCircleOutline className="w-8 h-8" />
             </button>
           </div>
+          
           <IconContext.Provider value={{ className: "w-6 h-6" }}>
-            <ul className="my-4 flex w-full flex-wrap gap-2 px-4 sm:hidden">
+            <ul className="my-4 flex w-full flex-wrap gap-2 px-4">
               {mobileSidebarItems.map((item, index) => (
                 <li key={index} className="w-full">
                   <Link
                     to={item.path}
-                    className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-blue-400 hover:text-black focus:border-blue-500 focus:bg-blue-400 focus:text-black"
+                    className="flex w-full items-center justify-start gap-x-4 border border-gray-600 px-4 py-3 text-left hover:bg-blue-600 hover:text-white focus:border-blue-500 focus:bg-blue-600 focus:text-white transition-colors rounded-lg"
                   >
-                    <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
+                    <span className="inline-block w-6">
                       {item.icon}
                     </span>
                     <span>{item.name}</span>
@@ -118,29 +166,35 @@ function Header() {
               ))}
             </ul>
           </IconContext.Provider>
-          <div className="mb-8 mt-auto ml-36 flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
-            <Button className="bg-green-800 " onClick={handleUploadVideo}>Upload Video</Button>
-  
-            {authStatus && userData && (
+          
+          <div className="mt-auto mb-4 flex w-full flex-wrap gap-3 px-4">
+            <Button 
+              className="bg-green-600 hover:bg-green-700 w-full" 
+              onClick={handleUploadVideo}
+            >
+              Upload Video
+            </Button>
+
+            {authStatus && userData ? (
               <>
                 <Button
-                  className="bg-red-700 hover:bg-red-500"
+                  className="bg-red-600 hover:bg-red-700 w-full"
                   onClick={handleLogout}
                 >
                   Logout
                 </Button>
-                <div className="mb-8 mt-auto px-4 sm:mb-0 sm:mt-0 sm:px-0">
+                <div className="w-full px-4 py-3 border border-gray-600 rounded-lg">
                   <Link
                     to={`/channel/${userData?.username}/videos`}
-                    className="flex w-full gap-4 text-left sm:items-center"
+                    className="flex w-full gap-4 text-left items-center"
                   >
                     <img
                       src={userData.avatar}
                       alt={userData.username}
-                      className="object-cover h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12"
+                      className="object-cover h-12 w-12 shrink-0 rounded-full"
                     />
-                    <div className="w-full pt-2 sm:hidden">
-                      <h6 className="font-semibold">{userData.fullName}</h6>
+                    <div className="w-full">
+                      <h6 className="font-semibold text-white">{userData.fullName}</h6>
                       <p className="text-sm text-gray-300">
                         {userData.username}
                       </p>
@@ -148,14 +202,12 @@ function Header() {
                   </Link>
                 </div>
               </>
-            )}
-  
-            {!authStatus && (
-              <>
-                <Link to="/login">
-                  <button className="bg-blue-800 mr-1 rounded px-3 py-2 text-center text-white transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto ">Log in</button>
-                </Link>
-              </>
+            ) : (
+              <Link to="/login" className="w-full">
+                <button className="bg-blue-600 hover:bg-blue-700 w-full rounded px-4 py-2 text-center text-white transition-colors">
+                  Log in
+                </button>
+              </Link>
             )}
           </div>
         </div>
